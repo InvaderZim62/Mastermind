@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8yl-hw-zBV" customClass="BoardView" customModule="Mastermind" customModuleProvider="target">
-                                <rect key="frame" x="20" y="78" width="233.5" height="475.5"/>
+                                <rect key="frame" x="30" y="78" width="219.5" height="475.5"/>
                                 <color key="backgroundColor" red="0.96010226009999999" green="0.89480298759999999" blue="0.8588177562" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mastermind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQ1-fr-sZ8">
@@ -25,12 +26,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESr-CD-INB" customClass="CodeView" customModule="Mastermind" customModuleProvider="target">
-                                <rect key="frame" x="20" y="561.5" width="233.5" height="85.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESr-CD-INB" customClass="MarblesView" customModule="Mastermind" customModuleProvider="target">
+                                <rect key="frame" x="30" y="561.5" width="219.5" height="85.5"/>
                                 <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tt2-T9-hKI" customClass="ResultsView" customModule="Mastermind" customModuleProvider="target">
-                                <rect key="frame" x="261.5" y="78" width="93.5" height="475.5"/>
+                                <rect key="frame" x="257.5" y="78" width="87.5" height="475.5"/>
                                 <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
@@ -43,9 +44,9 @@
                             <constraint firstItem="jQ1-fr-sZ8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Pog-Yq-tyT"/>
                             <constraint firstItem="ESr-CD-INB" firstAttribute="height" secondItem="8yl-hw-zBV" secondAttribute="height" multiplier="0.18" id="RKS-Po-wUZ"/>
                             <constraint firstItem="Tt2-T9-hKI" firstAttribute="leading" secondItem="8yl-hw-zBV" secondAttribute="trailing" constant="8" id="SRH-R6-zcT"/>
-                            <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="SWq-qg-emY"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="SWq-qg-emY"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="top" secondItem="jQ1-fr-sZ8" secondAttribute="bottom" constant="8" id="Y7V-Pu-JZ1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tt2-T9-hKI" secondAttribute="trailing" constant="20" id="dym-mQ-VlT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tt2-T9-hKI" secondAttribute="trailing" constant="30" id="dym-mQ-VlT"/>
                             <constraint firstItem="Tt2-T9-hKI" firstAttribute="width" secondItem="8yl-hw-zBV" secondAttribute="width" multiplier="0.4" id="mnY-Vb-Adc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ESr-CD-INB" secondAttribute="bottom" constant="20" id="oJM-0D-3FG"/>
                             <constraint firstItem="ESr-CD-INB" firstAttribute="top" secondItem="8yl-hw-zBV" secondAttribute="bottom" constant="8" id="wNH-Zf-uuc"/>
@@ -55,7 +56,7 @@
                     </view>
                     <connections>
                         <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
-                        <outlet property="codeView" destination="ESr-CD-INB" id="gQs-c8-qCF"/>
+                        <outlet property="marbleView" destination="ESr-CD-INB" id="xUC-Y3-kfJ"/>
                         <outlet property="resultsView" destination="Tt2-T9-hKI" id="Ek3-xK-Boq"/>
                     </connections>
                 </viewController>

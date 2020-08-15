@@ -1,5 +1,5 @@
 //
-//  ResultsView.swift
+//  MarblesView.swift
 //  Mastermind
 //
 //  Created by Phil Stern on 8/15/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResultsView: UIView {
+class MarblesView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.

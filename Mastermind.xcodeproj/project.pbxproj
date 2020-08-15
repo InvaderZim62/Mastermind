@@ -15,7 +15,8 @@
 		4A1AB89524E85F0500140429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A1AB89324E85F0500140429 /* LaunchScreen.storyboard */; };
 		4A1AB89E24E862E500140429 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB89D24E862E500140429 /* BoardView.swift */; };
 		4A1AB8A024E8687900140429 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB89F24E8687900140429 /* ResultsView.swift */; };
-		4A1AB8A224E8689700140429 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A124E8689700140429 /* CodeView.swift */; };
+		4A1AB8A224E8689700140429 /* MarblesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A124E8689700140429 /* MarblesView.swift */; };
+		4A1AB8A524E88B8300140429 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A424E88B8300140429 /* GlobalData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +30,8 @@
 		4A1AB89624E85F0500140429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A1AB89D24E862E500140429 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		4A1AB89F24E8687900140429 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
-		4A1AB8A124E8689700140429 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		4A1AB8A124E8689700140429 /* MarblesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarblesView.swift; sourceTree = "<group>"; };
+		4A1AB8A424E88B8300140429 /* GlobalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +66,8 @@
 			children = (
 				4A1AB88E24E85F0200140429 /* Main.storyboard */,
 				4A1AB88C24E85F0200140429 /* MastermindViewController.swift */,
-				4A1AB89D24E862E500140429 /* BoardView.swift */,
-				4A1AB89F24E8687900140429 /* ResultsView.swift */,
-				4A1AB8A124E8689700140429 /* CodeView.swift */,
+				4A1AB8A424E88B8300140429 /* GlobalData.swift */,
+				4A1AB8A324E8825400140429 /* View */,
 				4A1AB89C24E85F3200140429 /* Supporting Files */,
 				4A1AB89624E85F0500140429 /* Info.plist */,
 			);
@@ -82,6 +83,16 @@
 				4A1AB89324E85F0500140429 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4A1AB8A324E8825400140429 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4A1AB89D24E862E500140429 /* BoardView.swift */,
+				4A1AB89F24E8687900140429 /* ResultsView.swift */,
+				4A1AB8A124E8689700140429 /* MarblesView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,7 +169,8 @@
 				4A1AB88D24E85F0200140429 /* MastermindViewController.swift in Sources */,
 				4A1AB89E24E862E500140429 /* BoardView.swift in Sources */,
 				4A1AB88924E85F0200140429 /* AppDelegate.swift in Sources */,
-				4A1AB8A224E8689700140429 /* CodeView.swift in Sources */,
+				4A1AB8A224E8689700140429 /* MarblesView.swift in Sources */,
+				4A1AB8A524E88B8300140429 /* GlobalData.swift in Sources */,
 				4A1AB8A024E8687900140429 /* ResultsView.swift in Sources */,
 				4A1AB88B24E85F0200140429 /* SceneDelegate.swift in Sources */,
 			);
