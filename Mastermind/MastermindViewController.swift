@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MastermindViewController.swift
 //  Mastermind
 //
 //  Created by Phil Stern on 8/15/20.
@@ -8,13 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MastermindViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
 

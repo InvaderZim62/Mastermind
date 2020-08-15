@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A1AB88924E85F0200140429 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB88824E85F0200140429 /* AppDelegate.swift */; };
 		4A1AB88B24E85F0200140429 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB88A24E85F0200140429 /* SceneDelegate.swift */; };
-		4A1AB88D24E85F0200140429 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB88C24E85F0200140429 /* ViewController.swift */; };
+		4A1AB88D24E85F0200140429 /* MastermindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB88C24E85F0200140429 /* MastermindViewController.swift */; };
 		4A1AB89024E85F0200140429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A1AB88E24E85F0200140429 /* Main.storyboard */; };
 		4A1AB89224E85F0500140429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A1AB89124E85F0500140429 /* Assets.xcassets */; };
 		4A1AB89524E85F0500140429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A1AB89324E85F0500140429 /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		4A1AB88524E85F0200140429 /* Mastermind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mastermind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A1AB88824E85F0200140429 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A1AB88A24E85F0200140429 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4A1AB88C24E85F0200140429 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4A1AB88C24E85F0200140429 /* MastermindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MastermindViewController.swift; sourceTree = "<group>"; };
 		4A1AB88F24E85F0200140429 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A1AB89124E85F0500140429 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A1AB89424E85F0500140429 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,15 +56,23 @@
 		4A1AB88724E85F0200140429 /* Mastermind */ = {
 			isa = PBXGroup;
 			children = (
-				4A1AB88824E85F0200140429 /* AppDelegate.swift */,
-				4A1AB88A24E85F0200140429 /* SceneDelegate.swift */,
-				4A1AB88C24E85F0200140429 /* ViewController.swift */,
 				4A1AB88E24E85F0200140429 /* Main.storyboard */,
-				4A1AB89124E85F0500140429 /* Assets.xcassets */,
-				4A1AB89324E85F0500140429 /* LaunchScreen.storyboard */,
+				4A1AB88C24E85F0200140429 /* MastermindViewController.swift */,
+				4A1AB89C24E85F3200140429 /* Supporting Files */,
 				4A1AB89624E85F0500140429 /* Info.plist */,
 			);
 			path = Mastermind;
+			sourceTree = "<group>";
+		};
+		4A1AB89C24E85F3200140429 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4A1AB88824E85F0200140429 /* AppDelegate.swift */,
+				4A1AB88A24E85F0200140429 /* SceneDelegate.swift */,
+				4A1AB89124E85F0500140429 /* Assets.xcassets */,
+				4A1AB89324E85F0500140429 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A1AB88D24E85F0200140429 /* ViewController.swift in Sources */,
+				4A1AB88D24E85F0200140429 /* MastermindViewController.swift in Sources */,
 				4A1AB88924E85F0200140429 /* AppDelegate.swift in Sources */,
 				4A1AB88B24E85F0200140429 /* SceneDelegate.swift in Sources */,
 			);
@@ -287,6 +295,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 65Z9KA7SHC;
 				INFOPLIST_FILE = Mastermind/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -305,6 +314,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 65Z9KA7SHC;
 				INFOPLIST_FILE = Mastermind/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
