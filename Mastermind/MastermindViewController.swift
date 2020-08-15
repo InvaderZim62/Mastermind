@@ -18,7 +18,6 @@ struct Constants {
 
 class MastermindViewController: UIViewController {
     
-    var guessesMade = 0
     var guesses = [[UIColor]]()
 
     @IBOutlet weak var boardView: BoardView!
@@ -33,8 +32,7 @@ class MastermindViewController: UIViewController {
     }
     
     private func createTestData() {
-        guessesMade = 3
-        for _ in 0..<guessesMade {
+        for _ in 0..<5 {
             var colorRow = [UIColor]()
             for _ in 0..<Constants.maxColumns {
                 colorRow.append(Constants.marbleColors.randomElement()!)
@@ -46,7 +44,6 @@ class MastermindViewController: UIViewController {
     
     private func updateViewFromModel() {
         boardView.guesses = guesses
-        boardView.guessesMade = guessesMade
         boardView.setNeedsDisplay()
     }
 }

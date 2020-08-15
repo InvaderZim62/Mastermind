@@ -10,7 +10,6 @@ import UIKit
 
 class BoardView: UIView {
     
-    var guessesMade = 0
     var guesses = [[UIColor]]()
 
     private var circleSeparation: CGFloat = 0
@@ -32,7 +31,7 @@ class BoardView: UIView {
             for col in 0..<Constants.maxColumns {
                 let center = CGPoint(x: leftOffset + circleSeparation * (CGFloat(col) + 0.5),
                                      y: topOffset + circleSeparation * (CGFloat(row) + 0.5))
-                let color: UIColor = row < guessesMade ? guesses[row][col] : row == guessesMade ? Constants.backgroundColor : Constants.boardColor
+                let color: UIColor = row < guesses.count ? guesses[row][col] : row == guesses.count ? Constants.backgroundColor : Constants.boardColor
                 drawHole(center: center, color: color)
             }
         }
