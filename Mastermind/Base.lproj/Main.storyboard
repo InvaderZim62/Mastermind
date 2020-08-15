@@ -14,13 +14,54 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8yl-hw-zBV" customClass="BoardView" customModule="Mastermind" customModuleProvider="target">
+                                <rect key="frame" x="20" y="78" width="233.5" height="475.5"/>
+                                <color key="backgroundColor" red="0.96010226009999999" green="0.89480298759999999" blue="0.8588177562" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mastermind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQ1-fr-sZ8">
+                                <rect key="frame" x="49.5" y="10" width="276.5" height="60"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESr-CD-INB" customClass="CodeView" customModule="Mastermind" customModuleProvider="target">
+                                <rect key="frame" x="20" y="561.5" width="233.5" height="85.5"/>
+                                <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tt2-T9-hKI" customClass="ResultsView" customModule="Mastermind" customModuleProvider="target">
+                                <rect key="frame" x="261.5" y="78" width="93.5" height="475.5"/>
+                                <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="jQ1-fr-sZ8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GFL-H7-5hk"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="bottom" secondItem="Tt2-T9-hKI" secondAttribute="bottom" id="Gd2-lB-rP4"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="trailing" secondItem="ESr-CD-INB" secondAttribute="trailing" id="MkJ-FI-drQ"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="top" secondItem="Tt2-T9-hKI" secondAttribute="top" id="Pkf-Ax-XSn"/>
+                            <constraint firstItem="jQ1-fr-sZ8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Pog-Yq-tyT"/>
+                            <constraint firstItem="ESr-CD-INB" firstAttribute="height" secondItem="8yl-hw-zBV" secondAttribute="height" multiplier="0.18" id="RKS-Po-wUZ"/>
+                            <constraint firstItem="Tt2-T9-hKI" firstAttribute="leading" secondItem="8yl-hw-zBV" secondAttribute="trailing" constant="8" id="SRH-R6-zcT"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="SWq-qg-emY"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="top" secondItem="jQ1-fr-sZ8" secondAttribute="bottom" constant="8" id="Y7V-Pu-JZ1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tt2-T9-hKI" secondAttribute="trailing" constant="20" id="dym-mQ-VlT"/>
+                            <constraint firstItem="Tt2-T9-hKI" firstAttribute="width" secondItem="8yl-hw-zBV" secondAttribute="width" multiplier="0.4" id="mnY-Vb-Adc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ESr-CD-INB" secondAttribute="bottom" constant="20" id="oJM-0D-3FG"/>
+                            <constraint firstItem="ESr-CD-INB" firstAttribute="top" secondItem="8yl-hw-zBV" secondAttribute="bottom" constant="8" id="wNH-Zf-uuc"/>
+                            <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="ESr-CD-INB" secondAttribute="leading" id="zvy-dw-o3S"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
+                        <outlet property="codeView" destination="ESr-CD-INB" id="gQs-c8-qCF"/>
+                        <outlet property="resultsView" destination="Tt2-T9-hKI" id="Ek3-xK-Boq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="92"/>
+            <point key="canvasLocation" x="138.40000000000001" y="91.304347826086968"/>
         </scene>
     </scenes>
 </document>
