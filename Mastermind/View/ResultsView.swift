@@ -32,6 +32,7 @@ class ResultsView: UIView {
 
     override func draw(_ rect: CGRect) {
         for row in 0..<Constants.maxGuesses {
+            if row < Constants.maxGuesses - 1 { drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1)) }
             for subRow in 0..<ResultsConst.pegRows {
                 for col in 0..<numberPegColumns {
                     let pegNumber = subRow * numberPegColumns + col
@@ -57,5 +58,15 @@ class ResultsView: UIView {
         circle.stroke()
         color.setFill()
         circle.fill()
+    }
+    
+    private func drawLine(yPos: CGFloat) {
+        let indent = 0.04 * bounds.width
+        let line = UIBezierPath()
+        line.move(to: CGPoint(x: indent, y: yPos))
+        line.addLine(to: CGPoint(x: bounds.width - indent, y: yPos))
+        line.lineWidth = 1
+        UIColor.black.setStroke()
+        line.stroke()
     }
 }

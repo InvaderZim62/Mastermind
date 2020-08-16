@@ -23,6 +23,7 @@ class BoardView: UIView {
 
     override func draw(_ rect: CGRect) {
         for row in 0..<Constants.maxGuesses {
+            if row < Constants.maxGuesses - 1 { drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1)) }
             for col in 0..<Constants.numberHidden {
                 let center = CGPoint(x: leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
                                      y: globalData.topOffset + globalData.circleSeparation * (CGFloat(row) + 0.5))
@@ -30,10 +31,6 @@ class BoardView: UIView {
                 drawHole(center: center, color: color)
             }
         }
-    }
-    
-    private func drawLine(yPos: Double) {
-        
     }
 
     private func drawHole(center: CGPoint, color: UIColor) {
@@ -47,5 +44,15 @@ class BoardView: UIView {
         circle.stroke()
         color.setFill()
         circle.fill()
+    }
+    
+    private func drawLine(yPos: CGFloat) {
+        let indent = 0.04 * bounds.width
+        let line = UIBezierPath()
+        line.move(to: CGPoint(x: indent, y: yPos))
+        line.addLine(to: CGPoint(x: bounds.width - indent, y: yPos))
+        line.lineWidth = 1
+        UIColor.black.setStroke()
+        line.stroke()
     }
 }
