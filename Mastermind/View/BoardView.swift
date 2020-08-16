@@ -17,10 +17,6 @@ class BoardView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        // center 10 x 4 grid of circles, no matter what the aspect ratio of BoardView is
-        globalData.circleSeparation = min(bounds.height / (CGFloat(Constants.maxGuesses) + 0.5),
-                                          bounds.width / (CGFloat(Constants.numberHidden) + 0.5))
-        globalData.topOffset = (bounds.height - CGFloat(Constants.maxGuesses) * globalData.circleSeparation) / 2
         leftOffset = (bounds.width - CGFloat(Constants.numberHidden) * globalData.circleSeparation) / 2
         setNeedsDisplay()
     }

@@ -28,6 +28,8 @@ class MastermindViewController: UIViewController {
     var guesses = [[UIColor]]()  // guesses[row][col]
     var results = [[Result]]()  // results[row][position]
 
+    private let globalData = GlobalData.sharedInstance
+
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
     @IBOutlet weak var marbleView: MarblesView!
@@ -39,6 +41,15 @@ class MastermindViewController: UIViewController {
         createTestData()
     }
     
+    override func viewDidLayoutSubviews() {  // pws: delete this (redundant)
+        super.viewDidLayoutSubviews()
+        // center 10 x 4 grid of circles, no matter what the aspect ratio of BoardView is
+        // Note: don't move this to BoardView, since ResultsView gets called before BoardView
+        globalData.circleSeparation = min(boardView.bounds.height / (CGFloat(Constants.maxGuesses) + 0.5),
+                                          boardView.bounds.width / (CGFloat(Constants.numberHidden) + 0.5))
+        globalData.topOffset = (boardView.bounds.height - CGFloat(Constants.maxGuesses) * globalData.circleSeparation) / 2
+    }
+
     private func createTestData() {
         let numberOfGuesses = 3
         for _ in 0..<numberOfGuesses {
