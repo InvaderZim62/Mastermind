@@ -10,7 +10,8 @@ import UIKit
 
 class BoardView: UIView {
     
-    var guesses = [[UIColor]]()
+    var guessColors = [[UIColor]]()
+    var currentGuess = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)
     var turnNumber = 0
     
     private let globalData = GlobalData.sharedInstance
@@ -34,8 +35,7 @@ class BoardView: UIView {
             }
             for col in 0..<Constants.numberHidden {
                 let center = getHoleCenterPointFor(row: row, col: col)
-//                let color: UIColor = row < turnNumber ? guesses[row][col] : row == turnNumber ? Constants.backgroundColor : Constants.boardColor
-                let color = guesses[row][col]
+                let color: UIColor = row < turnNumber ? guessColors[row][col] : row == turnNumber ? currentGuess[col] : Constants.boardColor
                 drawHole(center: center, color: color)
             }
         }

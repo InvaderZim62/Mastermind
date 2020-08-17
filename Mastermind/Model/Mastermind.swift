@@ -17,7 +17,10 @@ enum Result: Int, CaseIterable {  // CaseIterable allows Ressult.allCases
 struct Mastermind {
 
     // read-only properties
-    private(set) var guessNumber = 0
+    private(set) var guessValues = [[Int]]()
+    var guessNumber: Int {
+        return guessValues.count
+    }
 
     private var numberHidden = 0  // number of hidden marbles
     private var maxGuesses = 0  // max guesses allowed
@@ -37,7 +40,7 @@ struct Mastermind {
     
     mutating func getResultsFor(guess: [Int]) -> [Result] {
         precondition(guess.count == hiddenValues.count, "Number of values in guess must match number of hidden values")
-        guessNumber += 1
+        guessValues.append(guess)
         var results = [Result]()
         var tempHidden = hiddenValues
         var tempGuess = guess
