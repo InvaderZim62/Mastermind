@@ -10,8 +10,8 @@ import UIKit
 
 class BoardView: UIView {
     
-    var guessColors = [[UIColor]]()
     var currentGuess = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)
+    var guessColors = [[UIColor]]()
     var turnNumber = 0
     
     private let globalData = GlobalData.sharedInstance

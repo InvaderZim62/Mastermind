@@ -30,6 +30,7 @@ struct Mastermind {
         self.numberHidden = numberHidden
         self.maxGuesses = maxGuesses
         pickRandomValues()
+        print("hidden values: \(hiddenValues)")
     }
     
     mutating func pickRandomValues() {

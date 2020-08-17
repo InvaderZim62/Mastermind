@@ -6,9 +6,11 @@
 //  Copyright © 2020 Phil Stern. All rights reserved.
 //
 //  Useful conversion...
-//  UIColor to index in marbleColors array     marbleView.color.index
+//  UIColor to value in marbleColors array     marbleView.color.value
 //
 // To do...
+// - add "Get Results" button
+// - allow marbles to be removed, before getting results
 // - show hidden marbles when game is over (maybe just if game is lost)
 // - send won/lost message to screen
 // - add a "Play Again" button, and add reset capability
@@ -21,16 +23,15 @@ struct Constants {
     static let boardColor = #colorLiteral(red: 0.9607843137, green: 0.8941176471, blue: 0.8588235294, alpha: 1)
     static let marbleColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)]
     static let resultColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), Constants.boardColor]  // same order as enum Result
-    static let maxGuesses = 2  // max guesses allowed
+    static let maxGuesses = 10  // max guesses allowed
     static let numberHidden = 4  // number of hidden colors
-    static let emptyGuess = -1
 }
 
 class MastermindViewController: UIViewController {
     
     var mastermind = Mastermind(numberHidden: Constants.numberHidden, maxGuesses: Constants.maxGuesses)
     let globalData = GlobalData.sharedInstance
-    var currentGuessValues = [Int](repeating: Constants.emptyGuess, count: Constants.numberHidden)  // the current guess, being built up
+    var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // the current guess, being built up
     var results = [[Result]]()  // results[row][position]
     var isGameOver = false
     var pannableMarbleViews = [MarbleView]()
@@ -69,17 +70,8 @@ class MastermindViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
-        var currentGuessColors = [UIColor]()
         if isGameOver {
-            currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)
-        } else {
-            for index in 0..<Constants.numberHidden {
-                if currentGuessValues[index] == Constants.emptyGuess {
-                    currentGuessColors.append(Constants.backgroundColor)
-                } else {
-                    currentGuessColors.append(Constants.marbleColors[currentGuessValues[index]])
-                }
-            }
+            currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
         }
         boardView.currentGuess = currentGuessColors
         boardView.guessColors = mastermind.guessColors  // .guessColors from extension, below
@@ -107,6 +99,7 @@ class MastermindViewController: UIViewController {
     // have pallet marble follow user's finger.  if released at a hole, return
     // panned marble to pallet (instantly) and fill in the hole
     @objc private func handlePan(pan: UIPanGestureRecognizer) {
+        guard !isGameOver else { return }
         let translation = pan.translation(in: view)
         if let marbleView = pan.view as? MarbleView {
             if pan.state == .began {
@@ -121,8 +114,8 @@ class MastermindViewController: UIViewController {
                 if isInHole(marbleView) {
                     // return marble to startPanPoint instantly, if in hole (isInHole stores the guess)
                     marbleView.center = self.startPanPoint
-                    let valuesFilled = currentGuessValues.filter { $0 != Constants.emptyGuess }
-                    if valuesFilled.count == Constants.numberHidden {
+                    let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
+                    if colorsFilled.count == Constants.numberHidden {
                         checkResults()
                     }
                 } else {
@@ -141,7 +134,7 @@ class MastermindViewController: UIViewController {
             let holeCenter = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
             let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
             if marblePoint.distance(from: holeCenter) < 12 {
-                currentGuessValues[holeIndex] = marbleView.color.index  // .index is from extension, below
+                currentGuessColors[holeIndex] = marbleView.color
                 updateViewFromModel()
                 isInHole = true
                 break
@@ -151,8 +144,9 @@ class MastermindViewController: UIViewController {
     }
     
     private func checkResults() {
+        let currentGuessValues = currentGuessColors.map { $0.value }
         let result = mastermind.getResultsFor(guess: currentGuessValues)
-        currentGuessValues = [Int](repeating: Constants.emptyGuess, count: Constants.numberHidden)  // reset
+        currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // reset
         results.append(result)
         let rightMarbles = result.filter { $0 == .rightColorRightPosition }
         if rightMarbles.count == Constants.numberHidden {
@@ -168,7 +162,7 @@ class MastermindViewController: UIViewController {
 
 extension UIColor {
     // index of UIColor in Constants.marbleColors array
-    var index: Int {
+    var value: Int {
         return Constants.marbleColors.firstIndex(of: self)!
     }
 }
