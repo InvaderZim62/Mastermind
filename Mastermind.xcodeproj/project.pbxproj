@@ -15,8 +15,10 @@
 		4A1AB89524E85F0500140429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A1AB89324E85F0500140429 /* LaunchScreen.storyboard */; };
 		4A1AB89E24E862E500140429 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB89D24E862E500140429 /* BoardView.swift */; };
 		4A1AB8A024E8687900140429 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB89F24E8687900140429 /* ResultsView.swift */; };
-		4A1AB8A224E8689700140429 /* MarblesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A124E8689700140429 /* MarblesView.swift */; };
 		4A1AB8A524E88B8300140429 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A424E88B8300140429 /* GlobalData.swift */; };
+		4A1AB8A724E8B71800140429 /* Mastermind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A624E8B71800140429 /* Mastermind.swift */; };
+		4A1AB8A924E9DF7E00140429 /* MarbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A824E9DF7E00140429 /* MarbleView.swift */; };
+		4A1AB8AC24EA096000140429 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8AB24EA096000140429 /* CGPointExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +32,10 @@
 		4A1AB89624E85F0500140429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A1AB89D24E862E500140429 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		4A1AB89F24E8687900140429 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
-		4A1AB8A124E8689700140429 /* MarblesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarblesView.swift; sourceTree = "<group>"; };
 		4A1AB8A424E88B8300140429 /* GlobalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
+		4A1AB8A624E8B71800140429 /* Mastermind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mastermind.swift; sourceTree = "<group>"; };
+		4A1AB8A824E9DF7E00140429 /* MarbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarbleView.swift; sourceTree = "<group>"; };
+		4A1AB8AB24EA096000140429 /* CGPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +70,9 @@
 			children = (
 				4A1AB88E24E85F0200140429 /* Main.storyboard */,
 				4A1AB88C24E85F0200140429 /* MastermindViewController.swift */,
-				4A1AB8A424E88B8300140429 /* GlobalData.swift */,
+				4A1AB8AA24EA060000140429 /* Model */,
 				4A1AB8A324E8825400140429 /* View */,
+				4A1AB8AD24EA097500140429 /* Utilities */,
 				4A1AB89C24E85F3200140429 /* Supporting Files */,
 				4A1AB89624E85F0500140429 /* Info.plist */,
 			);
@@ -90,9 +95,26 @@
 			children = (
 				4A1AB89D24E862E500140429 /* BoardView.swift */,
 				4A1AB89F24E8687900140429 /* ResultsView.swift */,
-				4A1AB8A124E8689700140429 /* MarblesView.swift */,
+				4A1AB8A824E9DF7E00140429 /* MarbleView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		4A1AB8AA24EA060000140429 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A1AB8A624E8B71800140429 /* Mastermind.swift */,
+				4A1AB8A424E88B8300140429 /* GlobalData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4A1AB8AD24EA097500140429 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4A1AB8AB24EA096000140429 /* CGPointExtension.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,11 +190,13 @@
 			files = (
 				4A1AB88D24E85F0200140429 /* MastermindViewController.swift in Sources */,
 				4A1AB89E24E862E500140429 /* BoardView.swift in Sources */,
+				4A1AB8AC24EA096000140429 /* CGPointExtension.swift in Sources */,
+				4A1AB8A924E9DF7E00140429 /* MarbleView.swift in Sources */,
 				4A1AB88924E85F0200140429 /* AppDelegate.swift in Sources */,
-				4A1AB8A224E8689700140429 /* MarblesView.swift in Sources */,
 				4A1AB8A524E88B8300140429 /* GlobalData.swift in Sources */,
 				4A1AB8A024E8687900140429 /* ResultsView.swift in Sources */,
 				4A1AB88B24E85F0200140429 /* SceneDelegate.swift in Sources */,
+				4A1AB8A724E8B71800140429 /* Mastermind.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

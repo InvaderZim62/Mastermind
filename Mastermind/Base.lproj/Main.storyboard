@@ -26,7 +26,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESr-CD-INB" customClass="MarblesView" customModule="Mastermind" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESr-CD-INB">
                                 <rect key="frame" x="30" y="561.5" width="219.5" height="85.5"/>
                                 <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>

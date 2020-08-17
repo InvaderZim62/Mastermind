@@ -11,6 +11,7 @@ import UIKit
 class BoardView: UIView {
     
     var guesses = [[UIColor]]()
+    var turnNumber = 0
     
     private let globalData = GlobalData.sharedInstance
     private var leftOffset: CGFloat = 0
@@ -20,14 +21,21 @@ class BoardView: UIView {
         leftOffset = (bounds.width - CGFloat(Constants.numberHidden) * globalData.circleSeparation) / 2
         setNeedsDisplay()
     }
+    
+    func getHoleCenterPointFor(row: Int, col: Int) -> CGPoint {
+        return CGPoint(x: leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
+                       y: globalData.topOffset + globalData.circleSeparation * (CGFloat(row) + 0.5))
+    }
 
     override func draw(_ rect: CGRect) {
         for row in 0..<Constants.maxGuesses {
-            if row < Constants.maxGuesses - 1 { drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1)) }
+            if row < Constants.maxGuesses - 1 {
+                drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1))
+            }
             for col in 0..<Constants.numberHidden {
-                let center = CGPoint(x: leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
-                                     y: globalData.topOffset + globalData.circleSeparation * (CGFloat(row) + 0.5))
-                let color: UIColor = row < guesses.count ? guesses[row][col] : row == guesses.count ? Constants.backgroundColor : Constants.boardColor
+                let center = getHoleCenterPointFor(row: row, col: col)
+//                let color: UIColor = row < turnNumber ? guesses[row][col] : row == turnNumber ? Constants.backgroundColor : Constants.boardColor
+                let color = guesses[row][col]
                 drawHole(center: center, color: color)
             }
         }
@@ -35,7 +43,7 @@ class BoardView: UIView {
 
     private func drawHole(center: CGPoint, color: UIColor) {
         let circle = UIBezierPath(arcCenter: center,
-                                  radius: 0.3 * globalData.circleSeparation,
+                                  radius: globalData.marbleRadius,
                                   startAngle: 0.0,
                                   endAngle: 2.0 * CGFloat.pi,
                                   clockwise: true)
