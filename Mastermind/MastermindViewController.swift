@@ -48,7 +48,7 @@ class MastermindViewController: UIViewController {
 
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
-    @IBOutlet weak var marbleView: UIView!
+    @IBOutlet weak var palletView: UIView!  // view at bottom where pannable marbles reside
     @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var showResultsButton: UIButton!
     @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
@@ -80,11 +80,11 @@ class MastermindViewController: UIViewController {
         pannableMarbleViews.forEach { $0.removeFromSuperview() }
         pannableMarbleViews.removeAll()
         
-        // add marbles to self.view, using marbleView for alignment
-        let marbleSpacing = marbleView.frame.width / CGFloat(Constants.marbleColors.count + 1)
+        // add marbles to self.view, using palletView for alignment
+        let marbleSpacing = palletView.frame.width / CGFloat(Constants.marbleColors.count + 1)
         for (index, marbleColor) in Constants.marbleColors.enumerated() {
-            let center = CGPoint(x: marbleView.frame.origin.x + marbleSpacing * CGFloat(index + 1),
-                                 y: marbleView.frame.midY)
+            let center = CGPoint(x: palletView.frame.origin.x + marbleSpacing * CGFloat(index + 1),
+                                 y: palletView.frame.midY)
             createPannableMarbleAt(center, color: marbleColor)
         }
     }
@@ -106,12 +106,10 @@ class MastermindViewController: UIViewController {
     }
     
     private func setResultsButtonOffset() {
-        // move button to first row
         let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
         resultsButtonOffset.constant = holeCenterPoint.y
     }
 
-    // create pannable marble in pallet or extra area
     private func createPannableMarbleAt(_ center: CGPoint, color: UIColor) {
         let marbleDiameter = 2 * globalData.marbleRadius
         let frame = CGRect(x: 0, y: 0, width: marbleDiameter, height: marbleDiameter)
@@ -126,8 +124,8 @@ class MastermindViewController: UIViewController {
         view.addSubview(marbleView)
     }
 
-    // have pallet marble follow user's finger.  if released at a hole, return
-    // panned marble to pallet (instantly) and fill in the hole
+    // Have pallet marble follow user's finger.  If released at a hole, return
+    // panned marble to pallet (instantly) and fill in the hole.
     @objc private func handlePan(pan: UIPanGestureRecognizer) {
         guard !isGameOver else { return }
         let translation = pan.translation(in: view)
@@ -139,10 +137,9 @@ class MastermindViewController: UIViewController {
                                         y: marbleView.center.y + translation.y)
             pan.setTranslation(CGPoint.zero, in: view)
             
-            // if panned marble at a hole, return it to pallet and fill in the hole
             if pan.state == .ended {
                 if isInHole(marbleView) {
-                    // return marble to startPanPoint instantly, if in hole (isInHole stores the guess)
+                    // return marble to startPanPoint instantly, to allow re-use (isInHole stores the guess)
                     marbleView.center = self.startPanPoint
                     let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
                     if colorsFilled.count == Constants.numberHidden {

@@ -91,7 +91,7 @@
                     </view>
                     <connections>
                         <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
-                        <outlet property="marbleView" destination="ESr-CD-INB" id="xUC-Y3-kfJ"/>
+                        <outlet property="palletView" destination="ESr-CD-INB" id="xUC-Y3-kfJ"/>
                         <outlet property="playAgainButton" destination="GF5-JH-5JV" id="vrg-vJ-H5n"/>
                         <outlet property="resultsButtonOffset" destination="RYE-Ly-oE3" id="4c1-LT-JMs"/>
                         <outlet property="resultsView" destination="Tt2-T9-hKI" id="Ek3-xK-Boq"/>
