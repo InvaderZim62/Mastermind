@@ -60,6 +60,8 @@ class MastermindViewController: UIViewController {
         view.backgroundColor = Constants.backgroundColor
         boardView.backgroundColor = Constants.boardColor
         playAgainButton.isHidden = true
+        playAgainButton.layer.borderWidth = 2
+        playAgainButton.layer.borderColor = UIColor.white.cgColor
         showResultsButton.isHidden = true  // unhide when all four guess positions are filled
     }
     
