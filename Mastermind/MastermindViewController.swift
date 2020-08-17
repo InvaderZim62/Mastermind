@@ -12,7 +12,7 @@
 // - allow marbles to be removed, before getting results
 // - show hidden marbles when game is over (maybe just if game is lost)
 // - send won/lost message to screen
-// - add a "Play Again" button, and add reset capability
+// - add settingsVC for changing maxGuesses and numberHidden
 //
 
 import UIKit
@@ -31,16 +31,20 @@ class MastermindViewController: UIViewController {
     var mastermind = Mastermind(numberHidden: Constants.numberHidden, maxGuesses: Constants.maxGuesses)
     let globalData = GlobalData.sharedInstance
     var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // the current guess, being built up
-    var results = [[Result]]()  // results[row][position]
-    var isGameOver = false
     var pannableMarbleViews = [MarbleView]()
     var startPanPoint = CGPoint()
+    var isGameOver = false {
+        didSet {
+            playAgainButton.isHidden = !isGameOver
+        }
+    }
 
     // MARK: - Outlets
 
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
     @IBOutlet weak var marbleView: UIView!
+    @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var showResultsButton: UIButton!
     @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
     
@@ -50,6 +54,7 @@ class MastermindViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Constants.backgroundColor
         boardView.backgroundColor = Constants.boardColor
+        playAgainButton.isHidden = true
         showResultsButton.isHidden = true  // unhide when all four guess positions are filled
     }
     
@@ -62,9 +67,7 @@ class MastermindViewController: UIViewController {
         globalData.topOffset = (boardView.bounds.height - CGFloat(Constants.maxGuesses) * globalData.circleSeparation) / 2
         globalData.marbleRadius = 0.3 * globalData.circleSeparation
 
-        // move button to first row
-        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
-        resultsButtonOffset.constant = holeCenterPoint.y
+        setResultsButtonOffset()
 
         // remove and re-add marbles (with new sizes) when orientation changes
         pannableMarbleViews.forEach { $0.removeFromSuperview() }
@@ -79,6 +82,14 @@ class MastermindViewController: UIViewController {
         }
     }
     
+    private func reset() {
+        mastermind.reset()
+        isGameOver = false
+        setResultsButtonOffset()
+        currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)
+        updateViewFromModel()
+    }
+    
     private func updateViewFromModel() {
         if isGameOver {
             currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
@@ -87,8 +98,14 @@ class MastermindViewController: UIViewController {
         boardView.guessColors = mastermind.guessColors  // .guessColors from extension, below
         boardView.turnNumber = mastermind.guessNumber
         boardView.setNeedsDisplay()
-        resultsView.results = results
+        resultsView.results = mastermind.results
         resultsView.setNeedsDisplay()
+    }
+    
+    private func setResultsButtonOffset() {
+        // move button to first row
+        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
+        resultsButtonOffset.constant = holeCenterPoint.y
     }
 
     // create pannable marble in pallet or extra area
@@ -155,26 +172,27 @@ class MastermindViewController: UIViewController {
     
     // MARK: - Button Actions
     
+    @IBAction func playAgainPressed(_ sender: UIButton) {
+        reset()
+    }
+    
     @IBAction func showResultsPressed(_ sender: UIButton) {
         showResultsButton.isHidden = true
         getResults()
-        // move button to next row
-        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
-        resultsButtonOffset.constant = holeCenterPoint.y
+        setResultsButtonOffset()  // move button to next row
     }
     
     private func getResults() {
         let currentGuessValues = currentGuessColors.map { $0.value }
-        let result = mastermind.getResultsFor(guess: currentGuessValues)
+        let result = mastermind.getResultFor(guess: currentGuessValues)
         currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // reset
-        results.append(result)
         let rightMarbles = result.filter { $0 == .rightColorRightPosition }
         if rightMarbles.count == Constants.numberHidden {
             isGameOver = true
-            print("You Win!")
+            print("You Won!")
         } else if mastermind.guessNumber == Constants.maxGuesses {
             isGameOver = true
-            print("You Lose!")
+            print("You Lost!")
         }
         updateViewFromModel()
     }

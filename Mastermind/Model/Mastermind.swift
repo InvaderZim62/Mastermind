@@ -18,6 +18,7 @@ struct Mastermind {
 
     // read-only properties
     private(set) var guessValues = [[Int]]()
+    private(set) var results = [[Result]]()  // results[row][position]
     var guessNumber: Int {
         return guessValues.count
     }
@@ -29,25 +30,32 @@ struct Mastermind {
     init(numberHidden: Int, maxGuesses: Int) {
         self.numberHidden = numberHidden
         self.maxGuesses = maxGuesses
-        pickRandomValues()
-        print("hidden values: \(hiddenValues)")
+        reset()
     }
     
-    mutating func pickRandomValues() {
+    mutating func selectHiddenValues() {
         for _ in 0..<numberHidden {
             hiddenValues.append(Int.random(in: 0..<Constants.marbleColors.count))
         }
     }
     
-    mutating func getResultsFor(guess: [Int]) -> [Result] {
+    mutating func reset() {
+        guessValues.removeAll()
+        results.removeAll()
+        hiddenValues.removeAll()
+        selectHiddenValues()
+        print("hidden values: \(hiddenValues)")
+    }
+    
+    mutating func getResultFor(guess: [Int]) -> [Result] {
         precondition(guess.count == hiddenValues.count, "Number of values in guess must match number of hidden values")
         guessValues.append(guess)
-        var results = [Result]()
+        var result = [Result]()
         var tempHidden = hiddenValues
         var tempGuess = guess
         for (index, aGuess) in tempGuess.enumerated().reversed() {
             if aGuess == tempHidden[index] {
-                results.append(.rightColorRightPosition)
+                result.append(.rightColorRightPosition)
                 tempGuess.remove(at: index)
                 tempHidden.remove(at: index)
             }
@@ -55,7 +63,7 @@ struct Mastermind {
         for (iGuess, aGuess) in tempGuess.enumerated().reversed() {
             for (iHidden, aHidden) in tempHidden.enumerated() {
                 if aGuess == aHidden {
-                    results.append(.rightColorWrongPosition)
+                    result.append(.rightColorWrongPosition)
                     tempGuess.remove(at: iGuess)
                     tempHidden.remove(at: iHidden)
                     break
@@ -63,9 +71,10 @@ struct Mastermind {
             }
         }
         // pad the rest with .wrongColor
-        for _ in results.count..<guess.count {
-            results.append(.wrongColor)
+        for _ in result.count..<guess.count {
+            result.append(.wrongColor)
         }
-        return results
+        results.append(result)
+        return result
     }
 }

@@ -48,9 +48,28 @@
                                     <action selector="showResultsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NLY-se-wLq"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF5-JH-5JV">
+                                <rect key="frame" x="127.5" y="315.5" width="120" height="36"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>
+                                <state key="normal" title="Play Again">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="playAgainPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ml5-TS-eRy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="GF5-JH-5JV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ECV-gf-6w2"/>
+                            <constraint firstItem="GF5-JH-5JV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="FZ5-Sn-ZYg"/>
                             <constraint firstItem="jQ1-fr-sZ8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GFL-H7-5hk"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="bottom" secondItem="Tt2-T9-hKI" secondAttribute="bottom" id="Gd2-lB-rP4"/>
                             <constraint firstItem="GHn-9F-yYC" firstAttribute="centerX" secondItem="Tt2-T9-hKI" secondAttribute="centerX" id="Jmc-BG-cCy"/>
@@ -73,6 +92,7 @@
                     <connections>
                         <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
                         <outlet property="marbleView" destination="ESr-CD-INB" id="xUC-Y3-kfJ"/>
+                        <outlet property="playAgainButton" destination="GF5-JH-5JV" id="vrg-vJ-H5n"/>
                         <outlet property="resultsButtonOffset" destination="RYE-Ly-oE3" id="4c1-LT-JMs"/>
                         <outlet property="resultsView" destination="Tt2-T9-hKI" id="Ek3-xK-Boq"/>
                         <outlet property="showResultsButton" destination="GHn-9F-yYC" id="WER-ld-8fn"/>
