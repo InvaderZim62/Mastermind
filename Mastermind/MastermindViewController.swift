@@ -9,7 +9,6 @@
 //  UIColor to value in marbleColors array     marbleView.color.value
 //
 // To do...
-// - add "Get Results" button
 // - allow marbles to be removed, before getting results
 // - show hidden marbles when game is over (maybe just if game is lost)
 // - send won/lost message to screen
@@ -37,14 +36,21 @@ class MastermindViewController: UIViewController {
     var pannableMarbleViews = [MarbleView]()
     var startPanPoint = CGPoint()
 
+    // MARK: - Outlets
+
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
     @IBOutlet weak var marbleView: UIView!
+    @IBOutlet weak var showResultsButton: UIButton!
+    @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
+    
+    // MARK: - Start of Code
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.backgroundColor
         boardView.backgroundColor = Constants.boardColor
+        showResultsButton.isHidden = true  // unhide when all four guess positions are filled
     }
     
     override func viewDidLayoutSubviews() {
@@ -55,7 +61,11 @@ class MastermindViewController: UIViewController {
                                           boardView.bounds.width / (CGFloat(Constants.numberHidden) + 0.5))
         globalData.topOffset = (boardView.bounds.height - CGFloat(Constants.maxGuesses) * globalData.circleSeparation) / 2
         globalData.marbleRadius = 0.3 * globalData.circleSeparation
-        
+
+        // move button to first row
+        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
+        resultsButtonOffset.constant = holeCenterPoint.y
+
         // remove and re-add marbles (with new sizes) when orientation changes
         pannableMarbleViews.forEach { $0.removeFromSuperview() }
         pannableMarbleViews.removeAll()
@@ -116,7 +126,7 @@ class MastermindViewController: UIViewController {
                     marbleView.center = self.startPanPoint
                     let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
                     if colorsFilled.count == Constants.numberHidden {
-                        checkResults()
+                        showResultsButton.isHidden = false
                     }
                 } else {
                     // return marble to startPanPoint slowly, if missed hole
@@ -143,7 +153,17 @@ class MastermindViewController: UIViewController {
         return isInHole
     }
     
-    private func checkResults() {
+    // MARK: - Button Actions
+    
+    @IBAction func showResultsPressed(_ sender: UIButton) {
+        showResultsButton.isHidden = true
+        getResults()
+        // move button to next row
+        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
+        resultsButtonOffset.constant = holeCenterPoint.y
+    }
+    
+    private func getResults() {
         let currentGuessValues = currentGuessColors.map { $0.value }
         let result = mastermind.getResultsFor(guess: currentGuessValues)
         currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // reset
@@ -159,6 +179,8 @@ class MastermindViewController: UIViewController {
         updateViewFromModel()
     }
 }
+
+// MARK: - Extensions
 
 extension UIColor {
     // index of UIColor in Constants.marbleColors array

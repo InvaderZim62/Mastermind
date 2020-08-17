@@ -34,15 +34,31 @@
                                 <rect key="frame" x="257.5" y="78" width="87.5" height="475.5"/>
                                 <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GHn-9F-yYC">
+                                <rect key="frame" x="247" y="95" width="108" height="26"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="4" maxX="8" maxY="4"/>
+                                <state key="normal" title="Show Results"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="14"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="showResultsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NLY-se-wLq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="jQ1-fr-sZ8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GFL-H7-5hk"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="bottom" secondItem="Tt2-T9-hKI" secondAttribute="bottom" id="Gd2-lB-rP4"/>
+                            <constraint firstItem="GHn-9F-yYC" firstAttribute="centerX" secondItem="Tt2-T9-hKI" secondAttribute="centerX" id="Jmc-BG-cCy"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="trailing" secondItem="ESr-CD-INB" secondAttribute="trailing" id="MkJ-FI-drQ"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="top" secondItem="Tt2-T9-hKI" secondAttribute="top" id="Pkf-Ax-XSn"/>
                             <constraint firstItem="jQ1-fr-sZ8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Pog-Yq-tyT"/>
                             <constraint firstItem="ESr-CD-INB" firstAttribute="height" secondItem="8yl-hw-zBV" secondAttribute="height" multiplier="0.18" id="RKS-Po-wUZ"/>
+                            <constraint firstItem="GHn-9F-yYC" firstAttribute="centerY" secondItem="Tt2-T9-hKI" secondAttribute="top" constant="30" id="RYE-Ly-oE3"/>
                             <constraint firstItem="Tt2-T9-hKI" firstAttribute="leading" secondItem="8yl-hw-zBV" secondAttribute="trailing" constant="8" id="SRH-R6-zcT"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="SWq-qg-emY"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="top" secondItem="jQ1-fr-sZ8" secondAttribute="bottom" constant="8" id="Y7V-Pu-JZ1"/>
@@ -57,7 +73,9 @@
                     <connections>
                         <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
                         <outlet property="marbleView" destination="ESr-CD-INB" id="xUC-Y3-kfJ"/>
+                        <outlet property="resultsButtonOffset" destination="RYE-Ly-oE3" id="4c1-LT-JMs"/>
                         <outlet property="resultsView" destination="Tt2-T9-hKI" id="Ek3-xK-Boq"/>
+                        <outlet property="showResultsButton" destination="GHn-9F-yYC" id="WER-ld-8fn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
