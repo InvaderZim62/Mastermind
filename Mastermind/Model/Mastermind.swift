@@ -20,7 +20,7 @@ struct Mastermind {
     private(set) var guessNumber = 0
 
     private var numberHidden = 0  // number of hidden marbles
-    private var maxGuesses = 0
+    private var maxGuesses = 0  // max guesses allowed
     private var hiddenValues = [Int]()  // these are the color values you're trying to guess
 
     init(numberHidden: Int, maxGuesses: Int) {
@@ -35,8 +35,8 @@ struct Mastermind {
         }
     }
     
-    mutating func getResultsOf(guess: [Int]) -> [Result] {  // pws: remove mutating, if not saving guesses
-        precondition(guess.count == hiddenValues.count, "Number of colors in guess must match number of hidden colors")
+    mutating func getResultsFor(guess: [Int]) -> [Result] {
+        precondition(guess.count == hiddenValues.count, "Number of values in guess must match number of hidden values")
         guessNumber += 1
         var results = [Result]()
         var tempHidden = hiddenValues
