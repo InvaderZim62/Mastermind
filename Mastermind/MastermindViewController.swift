@@ -36,6 +36,11 @@ class MastermindViewController: UIViewController {
     var isGameOver = false {
         didSet {
             playAgainButton.isHidden = !isGameOver
+            if isGameOver {
+                currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
+            } else {
+                currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // darken first row for new game
+            }
         }
     }
 
@@ -86,14 +91,10 @@ class MastermindViewController: UIViewController {
         mastermind.reset()
         isGameOver = false
         setResultsButtonOffset()
-        currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)
         updateViewFromModel()
     }
     
     private func updateViewFromModel() {
-        if isGameOver {
-            currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
-        }
         boardView.currentGuess = currentGuessColors
         boardView.guessColors = mastermind.guessColors  // .guessColors from extension, below
         boardView.turnNumber = mastermind.guessNumber
