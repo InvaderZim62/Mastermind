@@ -33,7 +33,7 @@ struct Constants {
     static let boardColor = #colorLiteral(red: 0.9607843137, green: 0.8941176471, blue: 0.8588235294, alpha: 1)
     static let marbleColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)]
     static let resultColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), Constants.boardColor]  // same order as enum Result
-    static let maxGuesses = 10  // max guesses allowed
+    static let maxGuesses = 2  // max guesses allowed
     static let numberHiddenColors = 4  // number of hidden colors
 }
 
@@ -46,15 +46,20 @@ class MastermindViewController: UIViewController {
     var boardMarbleViews = [Int: MarbleView]()  // [hole number: marbleView]
     var startPalletPanPoint = CGPoint()
     var startBoardPanHoleIndex = 0
+    var isSuccess = false {
+        didSet {
+            messageLabel.text = isSuccess ? "You Solved It!" : "Out of Guesses"
+        }
+    }
     var isGameOver = false {
         didSet {
             playAgainButton.isHidden = !isGameOver
+            messageLabel.isHidden = !isGameOver
+            coverView.alpha = isGameOver ? 0.3 : 0
             if isGameOver {
                 currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHiddenColors)  // don't darken next row
-                coverView.alpha = 0.4  // darked screen
             } else {
                 currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)  // darken first row for new game
-                coverView.alpha = 0
             }
             updateViewFromModel()
         }
@@ -69,6 +74,7 @@ class MastermindViewController: UIViewController {
     @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var showResultsButton: UIButton!
     @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
+    @IBOutlet weak var messageLabel: UILabel!
     
     // MARK: - Start of Code
     
@@ -80,6 +86,7 @@ class MastermindViewController: UIViewController {
         playAgainButton.layer.borderWidth = 2
         playAgainButton.layer.borderColor = UIColor.white.cgColor
         showResultsButton.isHidden = true  // unhide when all four guess positions are filled
+        messageLabel.isHidden = true
         
         // add marbles to self.view, using palletView for alignment
         for marbleColor in Constants.marbleColors {
@@ -273,11 +280,11 @@ class MastermindViewController: UIViewController {
         let result = mastermind.getResultFor(guess: currentGuessValues)
         let rightMarbles = result.filter { $0 == .rightColorRightPosition }
         if rightMarbles.count == Constants.numberHiddenColors {
+            isSuccess = true
             isGameOver = true
-            print("You Won!")
         } else if mastermind.guessNumber == Constants.maxGuesses {
+            isSuccess = false
             isGameOver = true
-            print("You Lost!")
         } else {
             isGameOver = false
         }
