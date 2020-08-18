@@ -24,7 +24,7 @@ class ResultsView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        numberPegColumns = Int(round(CGFloat(Constants.numberHidden) / 2))
+        numberPegColumns = Int(round(CGFloat(Constants.numberHiddenColors) / 2))
         pegSeparation = globalData.circleSeparation / CGFloat(ResultsConst.pegRows)
         leftPegOffset = (bounds.width - CGFloat(numberPegColumns) * pegSeparation) / 2
         setNeedsDisplay()
@@ -36,7 +36,7 @@ class ResultsView: UIView {
             for subRow in 0..<ResultsConst.pegRows {
                 for col in 0..<numberPegColumns {
                     let pegNumber = subRow * numberPegColumns + col
-                    if pegNumber < Constants.numberHidden {
+                    if pegNumber < Constants.numberHiddenColors {
                         let center = CGPoint(x: leftPegOffset + pegSeparation * (CGFloat(col) + 0.5),
                                              y: globalData.topOffset + pegSeparation * (CGFloat(row * ResultsConst.pegRows + subRow) + 0.5))
                         let color: UIColor = row < results.count ?

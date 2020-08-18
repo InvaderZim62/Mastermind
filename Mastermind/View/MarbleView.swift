@@ -14,11 +14,10 @@ class MarbleView: UIView {
     
     convenience init(frame: CGRect, color: UIColor) {
         self.init(frame: frame)
-        self.color = color
-        backgroundColor = .clear
+        self.init(color: color)
     }
     
-    convenience init(color: UIColor) {
+    convenience init(color: UIColor) {  // frame must be set externally, after this init
         self.init()
         self.color = color
         backgroundColor = .clear

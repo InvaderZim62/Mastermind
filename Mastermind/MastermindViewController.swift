@@ -5,14 +5,25 @@
 //  Created by Phil Stern on 8/15/20.
 //  Copyright © 2020 Phil Stern. All rights reserved.
 //
-//  Useful conversion...
-//  UIColor to value in marbleColors array     marbleView.color.value
+//  currentGuessColors is an array of UIColor (one for each hole in the current row).  It is passed to boardView for drawing.
+//  It starts out using the darker Constants.background color, to let the user know which row (mastermind.guessNumber) is being
+//  worked on.  As each "marble" is panned to a hole, the color of the marbleView is saved in the corresponding position in
+//  currentGuessColors.  When all four (numberHiddenColors) holes are filled, the showResults button is shown.  When the
+//  showResults button is pressed, currentGuessColors is set back to Constants.background color.
 //
-// To do...
-// - position board marbleViews correctly when orientation changes
-// - show hidden marbles when game is over (maybe just if game is lost)
-// - send won/lost message to screen
-// - add settingsVC for changing maxGuesses and numberHidden
+//  mastermind.allGuessValues is a 2D array (row x col) of Int.  It contains the color values (indices into the
+//  Constants.marbleColors array) of all past guesses.  It is past to boardView for drawing.  It starts out empty and grows
+//  one row at a time.  allGuessValues is converted to a 2D array of UIColor called allGuessColors, using the computed property
+//  in an extention to Mastermind at the bottom of this file.
+//
+//  Useful conversions...
+//  UIColor to value in marbleColors array     marbleView.color.value     let currentGuessValues = currentGuessColors.map { $0.value }
+//
+//  To do...
+//  - position board marbleViews correctly when orientation changes
+//  - show hidden marbles when game is over (maybe just if game is lost)
+//  - send won/lost message to screen
+//  - add settingsVC for changing maxGuesses and numberHiddenColors
 //
 
 import UIKit
@@ -23,14 +34,14 @@ struct Constants {
     static let marbleColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)]
     static let resultColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), Constants.boardColor]  // same order as enum Result
     static let maxGuesses = 10  // max guesses allowed
-    static let numberHidden = 4  // number of hidden colors
+    static let numberHiddenColors = 4  // number of hidden colors
 }
 
 class MastermindViewController: UIViewController {
     
-    var mastermind = Mastermind(numberHidden: Constants.numberHidden, maxGuesses: Constants.maxGuesses)
+    var mastermind = Mastermind(numberHidden: Constants.numberHiddenColors, maxGuesses: Constants.maxGuesses)
     let globalData = GlobalData.sharedInstance
-    var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // the current guess, being built up
+    var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)  // the current guess, being built up
     var palletMarbleViews = [MarbleView]()
     var boardMarbleViews = [Int: MarbleView]()  // [hole number: marbleView]
     var startPalletPanPoint = CGPoint()
@@ -39,9 +50,9 @@ class MastermindViewController: UIViewController {
         didSet {
             playAgainButton.isHidden = !isGameOver
             if isGameOver {
-                currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
+                currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHiddenColors)  // don't darken next row
             } else {
-                currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // darken first row for new game
+                currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)  // darken first row for new game
             }
             updateViewFromModel()
         }
@@ -79,7 +90,7 @@ class MastermindViewController: UIViewController {
         // center 10 x 4 grid of circles, no matter what the aspect ratio of BoardView is
         // Note: don't move this to BoardView, since ResultsView gets called before BoardView
         globalData.circleSeparation = min(boardView.bounds.height / (CGFloat(Constants.maxGuesses) + 0.5),
-                                          boardView.bounds.width / (CGFloat(Constants.numberHidden) + 0.5))
+                                          boardView.bounds.width / (CGFloat(Constants.numberHiddenColors) + 0.5))
         globalData.topOffset = (boardView.bounds.height - CGFloat(Constants.maxGuesses) * globalData.circleSeparation) / 2
         globalData.marbleRadius = 0.3 * globalData.circleSeparation
 
@@ -95,8 +106,8 @@ class MastermindViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
-        boardView.currentGuess = currentGuessColors
-        boardView.guessColors = mastermind.guessColors  // .guessColors from extension, below
+        boardView.currentGuessColors = currentGuessColors
+        boardView.allGuessColors = mastermind.allGuessColors  // .allGuessColors from extension, below
         boardView.turnNumber = mastermind.guessNumber
         boardView.setNeedsDisplay()
         resultsView.results = mastermind.results
@@ -157,7 +168,7 @@ class MastermindViewController: UIViewController {
                     }
                     createBoardMarbleWith(color: marbleView.color, at: holeIndex)
                     let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
-                    showResultsButton.isHidden = colorsFilled.count != Constants.numberHidden
+                    showResultsButton.isHidden = colorsFilled.count != Constants.numberHiddenColors
                 } else {
                     // return marble to startPanPoint slowly, if missed hole
                     UIView.animate(withDuration: 0.3, animations: {  // move to pallet in 0.3 sec
@@ -169,7 +180,7 @@ class MastermindViewController: UIViewController {
     }
     
     private func nearbyHole(_ marbleView: MarbleView) -> Int? {
-        for holeIndex in 0..<Constants.numberHidden {
+        for holeIndex in 0..<Constants.numberHiddenColors {
             let holeCenter = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
             let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
             if marblePoint.distance(from: holeCenter) < 15 {
@@ -235,7 +246,7 @@ class MastermindViewController: UIViewController {
                     boardMarbleViews[startBoardPanHoleIndex] = nil
                 }
                 let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
-                showResultsButton.isHidden = colorsFilled.count != Constants.numberHidden
+                showResultsButton.isHidden = colorsFilled.count != Constants.numberHiddenColors
             }
         }
     }
@@ -258,7 +269,7 @@ class MastermindViewController: UIViewController {
         let currentGuessValues = currentGuessColors.map { $0.value }
         let result = mastermind.getResultFor(guess: currentGuessValues)
         let rightMarbles = result.filter { $0 == .rightColorRightPosition }
-        if rightMarbles.count == Constants.numberHidden {
+        if rightMarbles.count == Constants.numberHiddenColors {
             isGameOver = true
             print("You Won!")
         } else if mastermind.guessNumber == Constants.maxGuesses {
@@ -280,8 +291,8 @@ extension UIColor {
 }
 
 extension Mastermind {
-    // 2D array of UIColors corresponding to guessValues
-    var guessColors: [[UIColor]] {
-        return guessValues.map { $0.map { Constants.marbleColors[$0] } }
+    // 2D array of UIColors corresponding to allGuessValues
+    var allGuessColors: [[UIColor]] {
+        return allGuessValues.map { $0.map { Constants.marbleColors[$0] } }
     }
 }

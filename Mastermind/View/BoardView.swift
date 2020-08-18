@@ -10,8 +10,8 @@ import UIKit
 
 class BoardView: UIView {
     
-    var currentGuess = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)
-    var guessColors = [[UIColor]]()
+    var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)
+    var allGuessColors = [[UIColor]]()
     var turnNumber = 0
     
     private let globalData = GlobalData.sharedInstance
@@ -19,7 +19,7 @@ class BoardView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        leftOffset = (bounds.width - CGFloat(Constants.numberHidden) * globalData.circleSeparation) / 2
+        leftOffset = (bounds.width - CGFloat(Constants.numberHiddenColors) * globalData.circleSeparation) / 2
         setNeedsDisplay()
     }
     
@@ -42,9 +42,9 @@ class BoardView: UIView {
             if row < Constants.maxGuesses - 1 {
                 drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1))
             }
-            for col in 0..<Constants.numberHidden {
+            for col in 0..<Constants.numberHiddenColors {
                 let center = getHoleCenterPointFor(row: row, col: col)
-                let color: UIColor = row < turnNumber ? guessColors[row][col] : row == turnNumber ? currentGuess[col] : Constants.boardColor
+                let color: UIColor = row < turnNumber ? allGuessColors[row][col] : row == turnNumber ? currentGuessColors[col] : Constants.boardColor
                 drawHole(center: center, color: color)
             }
         }

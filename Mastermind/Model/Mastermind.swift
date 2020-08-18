@@ -17,10 +17,10 @@ enum Result: Int, CaseIterable {  // CaseIterable allows Ressult.allCases
 struct Mastermind {
 
     // read-only properties
-    private(set) var guessValues = [[Int]]()
+    private(set) var allGuessValues = [[Int]]()
     private(set) var results = [[Result]]()  // results[row][position]
     var guessNumber: Int {
-        return guessValues.count
+        return allGuessValues.count
     }
 
     private var numberHidden = 0  // number of hidden marbles
@@ -40,7 +40,7 @@ struct Mastermind {
     }
     
     mutating func reset() {
-        guessValues.removeAll()
+        allGuessValues.removeAll()
         results.removeAll()
         hiddenValues.removeAll()
         selectHiddenValues()
@@ -49,7 +49,7 @@ struct Mastermind {
     
     mutating func getResultFor(guess: [Int]) -> [Result] {
         precondition(guess.count == hiddenValues.count, "Number of values in guess must match number of hidden values")
-        guessValues.append(guess)
+        allGuessValues.append(guess)
         var result = [Result]()
         var tempHidden = hiddenValues
         var tempGuess = guess
