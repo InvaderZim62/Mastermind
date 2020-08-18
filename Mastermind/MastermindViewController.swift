@@ -31,8 +31,8 @@ class MastermindViewController: UIViewController {
     var mastermind = Mastermind(numberHidden: Constants.numberHidden, maxGuesses: Constants.maxGuesses)
     let globalData = GlobalData.sharedInstance
     var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // the current guess, being built up
-    var pannableMarbleViews = [MarbleView]()
-    var startPanPoint = CGPoint()
+    var palletMarbleViews = [MarbleView]()
+    var startPalletPanPoint = CGPoint()
     var isGameOver = false {
         didSet {
             playAgainButton.isHidden = !isGameOver
@@ -48,7 +48,7 @@ class MastermindViewController: UIViewController {
 
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
-    @IBOutlet weak var palletView: UIView!  // view at bottom where pannable marbles reside
+    @IBOutlet weak var palletView: UIView!  // view at bottom where marble selection resides
     @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var showResultsButton: UIButton!
     @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
@@ -66,7 +66,7 @@ class MastermindViewController: UIViewController {
         
         // add marbles to self.view, using palletView for alignment
         for marbleColor in Constants.marbleColors {
-            createPannableMarbleWith(color: marbleColor)
+            createPalletMarbleWith(color: marbleColor)
         }
     }
     
@@ -80,7 +80,7 @@ class MastermindViewController: UIViewController {
         globalData.marbleRadius = 0.3 * globalData.circleSeparation
 
         setResultsButtonOffset()
-        setFrameAndCenterForPannableMarbles()
+        setFrameAndCenterForPalletMarbles()
     }
     
     private func reset() {
@@ -99,13 +99,13 @@ class MastermindViewController: UIViewController {
         resultsView.setNeedsDisplay()
     }
     
-    private func createPannableMarbleWith(color: UIColor) {
+    private func createPalletMarbleWith(color: UIColor) {
         let marbleView = MarbleView(color: color)  // frame and center will be set in viewDidLayoutSubviews
 
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanFromPallet))
         marbleView.addGestureRecognizer(pan)
         
-        pannableMarbleViews.append(marbleView)
+        palletMarbleViews.append(marbleView)
         view.addSubview(marbleView)
     }
 
@@ -114,26 +114,26 @@ class MastermindViewController: UIViewController {
         resultsButtonOffset.constant = holeCenterPoint.y
     }
     
-    private func setFrameAndCenterForPannableMarbles() {
+    private func setFrameAndCenterForPalletMarbles() {
         let marbleSpacing = palletView.frame.width / CGFloat(Constants.marbleColors.count + 1)
-        for (index, pannableMarbleView) in pannableMarbleViews.enumerated() {
+        for (index, palletMarbleView) in palletMarbleViews.enumerated() {
             let marbleDiameter = 2 * globalData.marbleRadius
             let frame = CGRect(x: 0, y: 0, width: marbleDiameter, height: marbleDiameter)
             let center = CGPoint(x: palletView.frame.origin.x + marbleSpacing * CGFloat(index + 1),
                                  y: palletView.frame.midY)
-            pannableMarbleView.frame = frame
-            pannableMarbleView.center = center
+            palletMarbleView.frame = frame
+            palletMarbleView.center = center
         }
     }
 
     // Have pallet marble follow user's finger.  If released at a hole, return
-    // panned marble to pallet (instantly) and fill in the hole.
-    @objc private func handlePan(pan: UIPanGestureRecognizer) {
+    // it to the pallet instantly, and fill in the hole.
+    @objc private func handlePanFromPallet(pan: UIPanGestureRecognizer) {
         guard !isGameOver else { return }
         let translation = pan.translation(in: view)
         if let marbleView = pan.view as? MarbleView {
             if pan.state == .began {
-                startPanPoint = marbleView.center
+                startPalletPanPoint = marbleView.center
             }
             marbleView.center = CGPoint(x: marbleView.center.x + translation.x,
                                         y: marbleView.center.y + translation.y)
@@ -142,7 +142,7 @@ class MastermindViewController: UIViewController {
             if pan.state == .ended {
                 if isInHole(marbleView) {
                     // return marble to startPanPoint instantly, to allow re-use (isInHole stores the guess)
-                    marbleView.center = self.startPanPoint
+                    marbleView.center = self.startPalletPanPoint
                     let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
                     if colorsFilled.count == Constants.numberHidden {
                         showResultsButton.isHidden = false
@@ -150,7 +150,7 @@ class MastermindViewController: UIViewController {
                 } else {
                     // return marble to startPanPoint slowly, if missed hole
                     UIView.animate(withDuration: 0.3, animations: {  // move to pallet in 0.3 sec
-                        marbleView.center = self.startPanPoint
+                        marbleView.center = self.startPalletPanPoint
                     })
                 }
             }
