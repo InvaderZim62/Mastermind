@@ -27,6 +27,15 @@ class BoardView: UIView {
         return CGPoint(x: leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
                        y: globalData.topOffset + globalData.circleSeparation * (CGFloat(row) + 0.5))
     }
+    
+    func getHoleColFor(xPos: CGFloat) -> Int {
+        return Int(round((xPos - globalData.topOffset) / globalData.circleSeparation - 0.5))
+    }
+    
+    func getHoleRowAndColFor(point: CGPoint) -> (row: Int, col: Int) {
+        return (Int(round((point.x - globalData.topOffset) / globalData.circleSeparation - 0.5)),
+                Int(round((point.y - globalData.topOffset) / globalData.circleSeparation - 0.5)))
+    }
 
     override func draw(_ rect: CGRect) {
         for row in 0..<Constants.maxGuesses {

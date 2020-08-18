@@ -32,14 +32,18 @@ class MastermindViewController: UIViewController {
     let globalData = GlobalData.sharedInstance
     var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // the current guess, being built up
     var palletMarbleViews = [MarbleView]()
+    var boardMarbleViews = [Int: MarbleView]()  // [hole number: marbleView]
     var startPalletPanPoint = CGPoint()
+    var startBoardPanHoleIndex = 0
     var isGameOver = false {
         didSet {
             playAgainButton.isHidden = !isGameOver
             if isGameOver {
                 currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
+                updateViewFromModel()
             } else {
                 currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // darken first row for new game
+                updateViewFromModel()
             }
         }
     }
@@ -70,6 +74,7 @@ class MastermindViewController: UIViewController {
         }
     }
     
+    // called when orientation changes or subview added
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // center 10 x 4 grid of circles, no matter what the aspect ratio of BoardView is
@@ -81,13 +86,13 @@ class MastermindViewController: UIViewController {
 
         setResultsButtonOffset()
         setFrameAndCenterForPalletMarbles()
+        setFrameAndCenterForBoardMarbles()
     }
     
     private func reset() {
         mastermind.reset()
-        isGameOver = false
         setResultsButtonOffset()
-        updateViewFromModel()
+        isGameOver = false
     }
     
     private func updateViewFromModel() {
@@ -126,13 +131,14 @@ class MastermindViewController: UIViewController {
         }
     }
 
-    // Have pallet marble follow user's finger.  If released at a hole, return
-    // it to the pallet instantly, and fill in the hole.
+    // Have pallet marble follow user's finger.  If released at a hole, return it to the pallet instantly,
+    // and create a board marble in its place.  If released away from a hole, return it to the pallet slowly.
     @objc private func handlePanFromPallet(pan: UIPanGestureRecognizer) {
         guard !isGameOver else { return }
         let translation = pan.translation(in: view)
         if let marbleView = pan.view as? MarbleView {
             if pan.state == .began {
+                marbleView.layer.zPosition = 2
                 startPalletPanPoint = marbleView.center
             }
             marbleView.center = CGPoint(x: marbleView.center.x + translation.x,
@@ -140,13 +146,19 @@ class MastermindViewController: UIViewController {
             pan.setTranslation(CGPoint.zero, in: view)
             
             if pan.state == .ended {
-                if isInHole(marbleView) {
+                if let holeIndex = nearbyHole(marbleView) {
+                    marbleView.layer.zPosition = 1
+                    currentGuessColors[holeIndex] = marbleView.color
+                    updateViewFromModel()  // pws: still needed?
                     // return marble to startPanPoint instantly, to allow re-use (isInHole stores the guess)
                     marbleView.center = self.startPalletPanPoint
-                    let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
-                    if colorsFilled.count == Constants.numberHidden {
-                        showResultsButton.isHidden = false
+                    // delete any existing marbleView at the destination hole
+                    if let existingMarbleView = boardMarbleViews[holeIndex] {
+                        existingMarbleView.removeFromSuperview()
                     }
+                    createBoardMarbleWith(color: marbleView.color, at: holeIndex)
+                    let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
+                    showResultsButton.isHidden = colorsFilled.count != Constants.numberHidden
                 } else {
                     // return marble to startPanPoint slowly, if missed hole
                     UIView.animate(withDuration: 0.3, animations: {  // move to pallet in 0.3 sec
@@ -157,21 +169,78 @@ class MastermindViewController: UIViewController {
         }
     }
     
-    private func isInHole(_ marbleView: MarbleView) -> Bool {
-        var isInHole = false
+    private func nearbyHole(_ marbleView: MarbleView) -> Int? {
         for holeIndex in 0..<Constants.numberHidden {
             let holeCenter = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
             let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
-            if marblePoint.distance(from: holeCenter) < 12 {
-                currentGuessColors[holeIndex] = marbleView.color
-                updateViewFromModel()
-                isInHole = true
-                break
+            if marblePoint.distance(from: holeCenter) < 15 {
+                return holeIndex
             }
         }
-        return isInHole
+        return nil
     }
     
+    private func createBoardMarbleWith(color: UIColor, at holeIndex: Int) {
+        let marbleView = MarbleView(color: color)  // frame and center will be set in viewDidLayoutSubviews
+
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanFromBoard))
+        marbleView.addGestureRecognizer(pan)
+        
+        boardMarbleViews[holeIndex] = marbleView
+        view.addSubview(marbleView)
+    }
+    
+    private func setFrameAndCenterForBoardMarbles() {
+        for (holeIndex, _) in boardMarbleViews {
+            let marbleDiameter = 2 * globalData.marbleRadius
+            let frame = CGRect(x: 0, y: 0, width: marbleDiameter, height: marbleDiameter)
+            let holePoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
+            boardMarbleViews[holeIndex]!.frame = frame
+            boardMarbleViews[holeIndex]!.center = boardView.convert(holePoint, to: view)  // convert from boardView to view coords
+        }
+    }
+
+    // Have board marble follow user's finger.  If released at a hole, center it there and remove any marble
+    // at that location.  If released away from a hole, return it to its original hole slowly.
+    @objc private func handlePanFromBoard(pan: UIPanGestureRecognizer) {
+        let translation = pan.translation(in: view)
+        if let marbleView = pan.view as? MarbleView {
+            if pan.state == .began {
+                marbleView.layer.zPosition = 2
+                let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
+                startBoardPanHoleIndex = boardView.getHoleColFor(xPos: marblePoint.x)
+                currentGuessColors[startBoardPanHoleIndex] = Constants.backgroundColor
+                updateViewFromModel()
+            }
+            marbleView.center = CGPoint(x: marbleView.center.x + translation.x,
+                                        y: marbleView.center.y + translation.y)
+            pan.setTranslation(CGPoint.zero, in: view)
+            
+            if pan.state == .ended {
+                if let holeIndex = nearbyHole(marbleView) {
+                    marbleView.layer.zPosition = 1
+                    // center marbleView at holeIndex
+                    let holePoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
+                    marbleView.center = boardView.convert(holePoint, to: view)  // convert from boardView to view coords
+                    currentGuessColors[holeIndex] = marbleView.color
+                    updateViewFromModel()  // pws: still needed?
+                    // delete existing marble at destination hole (if not the panned marble)
+                    if holeIndex != startBoardPanHoleIndex, let existingMarbleView = boardMarbleViews[holeIndex] {
+                        existingMarbleView.removeFromSuperview()
+                    }
+                    boardMarbleViews[startBoardPanHoleIndex] = nil
+                    boardMarbleViews[holeIndex] = marbleView
+                } else {
+                    // delete marble, if missed hole
+                    marbleView.removeFromSuperview()
+                    boardMarbleViews[startBoardPanHoleIndex] = nil
+                }
+                let colorsFilled = currentGuessColors.filter { $0 != Constants.backgroundColor }
+                showResultsButton.isHidden = colorsFilled.count != Constants.numberHidden
+            }
+        }
+    }
+
     // MARK: - Button Actions
     
     @IBAction func playAgainPressed(_ sender: UIButton) {
@@ -180,14 +249,15 @@ class MastermindViewController: UIViewController {
     
     @IBAction func showResultsPressed(_ sender: UIButton) {
         showResultsButton.isHidden = true
-        getResults()
         setResultsButtonOffset()  // move button to next row
+        getResults()
+        boardMarbleViews.values.forEach { $0.removeFromSuperview() }
+        boardMarbleViews.removeAll()
     }
     
     private func getResults() {
         let currentGuessValues = currentGuessColors.map { $0.value }
         let result = mastermind.getResultFor(guess: currentGuessValues)
-        currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // reset
         let rightMarbles = result.filter { $0 == .rightColorRightPosition }
         if rightMarbles.count == Constants.numberHidden {
             isGameOver = true
@@ -195,8 +265,9 @@ class MastermindViewController: UIViewController {
         } else if mastermind.guessNumber == Constants.maxGuesses {
             isGameOver = true
             print("You Lost!")
+        } else {
+            isGameOver = false
         }
-        updateViewFromModel()
     }
 }
 
