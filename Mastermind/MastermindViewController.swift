@@ -17,7 +17,7 @@
 //  in an extention to Mastermind at the bottom of this file.
 //
 //  PalletView is used to show the hidden marble colors when the game is over.  It is also used to align the marbleViews for
-//  use in the game, even though the marbleViews are subviews of the main view.  during the game, the palletView zPosition is
+//  use in the game, even though the marbleViews are subviews of the main view.  During the game, the palletView zPosition is
 //  set to 0, so the hidden marbles drawn on it cannot be seen.  When the game is over, the zPosition is set to two, so it
 //  covers the marbleViews.
 //
