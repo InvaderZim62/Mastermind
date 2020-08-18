@@ -15,8 +15,15 @@ class MarbleView: UIView {
     convenience init(frame: CGRect, color: UIColor) {
         self.init(frame: frame)
         self.color = color
+        backgroundColor = .clear
     }
     
+    convenience init(color: UIColor) {
+        self.init()
+        self.color = color
+        backgroundColor = .clear
+    }
+
     override func draw(_ rect: CGRect) {
         let center = CGPoint(x: self.bounds.width / 2.0, y: self.bounds.height / 2.0)
         let radius = min(self.bounds.width, self.bounds.height) / 2.05
