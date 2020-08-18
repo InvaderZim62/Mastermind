@@ -28,7 +28,7 @@ class BoardView: UIView {
     }
     
     func getHoleColFor(xPos: CGFloat) -> Int {
-        return Int(round((xPos - globalData.topOffset) / globalData.circleSeparation - 0.5))
+        return Int(round((xPos - globalData.leftOffset) / globalData.circleSeparation - 0.5))
     }
     
     func getHoleRowAndColFor(point: CGPoint) -> (row: Int, col: Int) {
