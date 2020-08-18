@@ -15,6 +15,11 @@ class PalletView: UIView {
     
     private let globalData = GlobalData.sharedInstance
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setNeedsDisplay()
+    }
+
     func getHoleCenterPointFor(col: Int) -> CGPoint {
         return CGPoint(x: globalData.leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
                        y: bounds.midY)
