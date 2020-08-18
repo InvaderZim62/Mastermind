@@ -17,6 +17,7 @@ enum Result: Int, CaseIterable {  // CaseIterable allows Ressult.allCases
 struct Mastermind {
 
     // read-only properties
+    private(set) var hiddenValues = [Int]()  // these are the color values you're trying to guess
     private(set) var allGuessValues = [[Int]]()
     private(set) var results = [[Result]]()  // results[row][position]
     var guessNumber: Int {
@@ -25,7 +26,6 @@ struct Mastermind {
 
     private var numberHidden = 0  // number of hidden marbles
     private var maxGuesses = 0  // max guesses allowed
-    private var hiddenValues = [Int]()  // these are the color values you're trying to guess
 
     init(numberHidden: Int, maxGuesses: Int) {
         self.numberHidden = numberHidden

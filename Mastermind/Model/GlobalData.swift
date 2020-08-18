@@ -20,5 +20,6 @@ class GlobalData: NSObject {
     
     var circleSeparation: CGFloat = 0
     var topOffset: CGFloat = 0
+    var leftOffset: CGFloat = 0
     var marbleRadius: CGFloat = 0
 }

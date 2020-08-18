@@ -16,15 +16,9 @@ class BoardView: UIView {
     
     private let globalData = GlobalData.sharedInstance
     private var leftOffset: CGFloat = 0
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        leftOffset = (bounds.width - CGFloat(Constants.numberHiddenColors) * globalData.circleSeparation) / 2
-        setNeedsDisplay()
-    }
     
     func getHoleCenterPointFor(row: Int, col: Int) -> CGPoint {
-        return CGPoint(x: leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
+        return CGPoint(x: globalData.leftOffset + globalData.circleSeparation * (CGFloat(col) + 0.5),
                        y: globalData.topOffset + globalData.circleSeparation * (CGFloat(row) + 0.5))
     }
     

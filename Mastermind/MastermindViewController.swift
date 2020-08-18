@@ -16,13 +16,16 @@
 //  one row at a time.  allGuessValues is converted to a 2D array of UIColor called allGuessColors, using the computed property
 //  in an extention to Mastermind at the bottom of this file.
 //
+//  PalletView is used to show the hidden marble colors when the game is over.  It is also used to align the marbleViews for
+//  use in the game, even though the marbleViews are subviews of the main view.  during the game, the palletView zPosition is
+//  set to 0, so the hidden marbles drawn on it cannot be seen.  When the game is over, the zPosition is set to two, so it
+//  covers the marbleViews.
+//
 //  Useful conversions...
 //  UIColor to value in marbleColors array     marbleView.color.value     let currentGuessValues = currentGuessColors.map { $0.value }
 //
 //  To do...
 //  - position board marbleViews correctly when orientation changes
-//  - show hidden marbles when game is over (maybe just if game is lost)
-//  - send won/lost message to screen
 //  - add settingsVC for changing maxGuesses and numberHiddenColors
 //
 
@@ -33,7 +36,7 @@ struct Constants {
     static let boardColor = #colorLiteral(red: 0.9607843137, green: 0.8941176471, blue: 0.8588235294, alpha: 1)
     static let marbleColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)]
     static let resultColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), Constants.boardColor]  // same order as enum Result
-    static let maxGuesses = 2  // max guesses allowed
+    static let maxGuesses = 1  // max guesses allowed
     static let numberHiddenColors = 4  // number of hidden colors
 }
 
@@ -55,7 +58,7 @@ class MastermindViewController: UIViewController {
         didSet {
             playAgainButton.isHidden = !isGameOver
             messageLabel.isHidden = !isGameOver
-            coverView.alpha = isGameOver ? 0.3 : 0
+            coverView.alpha = isGameOver ? 0.3 : 0  // darken screen
             if isGameOver {
                 currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHiddenColors)  // don't darken next row
             } else {
@@ -70,7 +73,7 @@ class MastermindViewController: UIViewController {
     @IBOutlet weak var coverView: UIView!
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
-    @IBOutlet weak var palletView: UIView!  // view at bottom where marble selection resides
+    @IBOutlet weak var palletView: PalletView!
     @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var showResultsButton: UIButton!
     @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
@@ -82,6 +85,7 @@ class MastermindViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Constants.backgroundColor
         boardView.backgroundColor = Constants.boardColor
+        palletView.hiddenColors = mastermind.hiddenColors  // .hiddenColors from extension, below
         playAgainButton.isHidden = true
         playAgainButton.layer.borderWidth = 2
         playAgainButton.layer.borderColor = UIColor.white.cgColor
@@ -102,6 +106,7 @@ class MastermindViewController: UIViewController {
         globalData.circleSeparation = min(boardView.bounds.height / (CGFloat(Constants.maxGuesses) + 0.5),
                                           boardView.bounds.width / (CGFloat(Constants.numberHiddenColors) + 0.5))
         globalData.topOffset = (boardView.bounds.height - CGFloat(Constants.maxGuesses) * globalData.circleSeparation) / 2
+        globalData.leftOffset = (boardView.bounds.width - CGFloat(Constants.numberHiddenColors) * globalData.circleSeparation) / 2
         globalData.marbleRadius = 0.3 * globalData.circleSeparation
 
         setResultsButtonOffset()
@@ -111,6 +116,7 @@ class MastermindViewController: UIViewController {
     
     private func reset() {
         mastermind.reset()
+        palletView.hiddenColors = mastermind.hiddenColors  // .hiddenColors from extension, below
         setResultsButtonOffset()
         isGameOver = false
     }
@@ -122,8 +128,12 @@ class MastermindViewController: UIViewController {
         boardView.setNeedsDisplay()
         resultsView.results = mastermind.results
         resultsView.setNeedsDisplay()
+        palletView.isShowing = isGameOver
+        palletView.layer.zPosition = isGameOver ? 2 : 0
     }
     
+    // MARK: - Pallet Marbles
+
     private func createPalletMarbleWith(color: UIColor) {
         let marbleView = MarbleView(color: color)  // frame and center will be set in viewDidLayoutSubviews
 
@@ -132,11 +142,6 @@ class MastermindViewController: UIViewController {
         
         palletMarbleViews.append(marbleView)
         view.addSubview(marbleView)
-    }
-
-    private func setResultsButtonOffset() {
-        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
-        resultsButtonOffset.constant = holeCenterPoint.y
     }
     
     private func setFrameAndCenterForPalletMarbles() {
@@ -189,16 +194,7 @@ class MastermindViewController: UIViewController {
         }
     }
     
-    private func nearbyHole(_ marbleView: MarbleView) -> Int? {
-        for holeIndex in 0..<Constants.numberHiddenColors {
-            let holeCenter = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
-            let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
-            if marblePoint.distance(from: holeCenter) < 15 {
-                return holeIndex
-            }
-        }
-        return nil
-    }
+    // MARK: - Board Marbles
     
     private func createBoardMarbleWith(color: UIColor, at holeIndex: Int) {
         let marbleView = MarbleView(color: color)  // frame and center will be set in viewDidLayoutSubviews
@@ -260,6 +256,24 @@ class MastermindViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Utilities
+    
+    private func setResultsButtonOffset() {
+        let holeCenterPoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: 0)
+        resultsButtonOffset.constant = holeCenterPoint.y
+    }
+
+    private func nearbyHole(_ marbleView: MarbleView) -> Int? {
+        for holeIndex in 0..<Constants.numberHiddenColors {
+            let holeCenter = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
+            let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
+            if marblePoint.distance(from: holeCenter) < 15 {
+                return holeIndex
+            }
+        }
+        return nil
+    }
 
     // MARK: - Button Actions
     
@@ -304,5 +318,9 @@ extension Mastermind {
     // 2D array of UIColors corresponding to allGuessValues
     var allGuessColors: [[UIColor]] {
         return allGuessValues.map { $0.map { Constants.marbleColors[$0] } }
+    }
+    // array of UIColor corresponding to hiddenValues
+    var hiddenColors: [UIColor] {
+        return hiddenValues.map { Constants.marbleColors[$0] }
     }
 }

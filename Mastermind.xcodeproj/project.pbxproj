@@ -19,6 +19,7 @@
 		4A1AB8A724E8B71800140429 /* Mastermind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A624E8B71800140429 /* Mastermind.swift */; };
 		4A1AB8A924E9DF7E00140429 /* MarbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A824E9DF7E00140429 /* MarbleView.swift */; };
 		4A1AB8AC24EA096000140429 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8AB24EA096000140429 /* CGPointExtension.swift */; };
+		4A1AB8AF24EC50C200140429 /* PalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8AE24EC50C200140429 /* PalletView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		4A1AB8A624E8B71800140429 /* Mastermind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mastermind.swift; sourceTree = "<group>"; };
 		4A1AB8A824E9DF7E00140429 /* MarbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarbleView.swift; sourceTree = "<group>"; };
 		4A1AB8AB24EA096000140429 /* CGPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
+		4A1AB8AE24EC50C200140429 /* PalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalletView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			children = (
 				4A1AB89D24E862E500140429 /* BoardView.swift */,
 				4A1AB89F24E8687900140429 /* ResultsView.swift */,
+				4A1AB8AE24EC50C200140429 /* PalletView.swift */,
 				4A1AB8A824E9DF7E00140429 /* MarbleView.swift */,
 			);
 			path = View;
@@ -196,6 +199,7 @@
 				4A1AB8A524E88B8300140429 /* GlobalData.swift in Sources */,
 				4A1AB8A024E8687900140429 /* ResultsView.swift in Sources */,
 				4A1AB88B24E85F0200140429 /* SceneDelegate.swift in Sources */,
+				4A1AB8AF24EC50C200140429 /* PalletView.swift in Sources */,
 				4A1AB8A724E8B71800140429 /* Mastermind.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
