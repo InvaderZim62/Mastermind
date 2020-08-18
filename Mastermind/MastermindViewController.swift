@@ -9,7 +9,7 @@
 //  UIColor to value in marbleColors array     marbleView.color.value
 //
 // To do...
-// - allow marbles to be removed, before getting results
+// - position board marbleViews correctly when orientation changes
 // - show hidden marbles when game is over (maybe just if game is lost)
 // - send won/lost message to screen
 // - add settingsVC for changing maxGuesses and numberHidden
@@ -40,11 +40,10 @@ class MastermindViewController: UIViewController {
             playAgainButton.isHidden = !isGameOver
             if isGameOver {
                 currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHidden)  // don't darken next row
-                updateViewFromModel()
             } else {
                 currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHidden)  // darken first row for new game
-                updateViewFromModel()
             }
+            updateViewFromModel()
         }
     }
 
