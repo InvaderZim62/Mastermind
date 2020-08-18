@@ -51,8 +51,10 @@ class MastermindViewController: UIViewController {
             playAgainButton.isHidden = !isGameOver
             if isGameOver {
                 currentGuessColors = [UIColor](repeating: Constants.boardColor, count: Constants.numberHiddenColors)  // don't darken next row
+                coverView.alpha = 0.4  // darked screen
             } else {
                 currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)  // darken first row for new game
+                coverView.alpha = 0
             }
             updateViewFromModel()
         }
@@ -60,6 +62,7 @@ class MastermindViewController: UIViewController {
 
     // MARK: - Outlets
 
+    @IBOutlet weak var coverView: UIView!
     @IBOutlet weak var boardView: BoardView!
     @IBOutlet weak var resultsView: ResultsView!
     @IBOutlet weak var palletView: UIView!  // view at bottom where marble selection resides

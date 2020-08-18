@@ -48,6 +48,10 @@
                                     <action selector="showResultsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NLY-se-wLq"/>
                                 </connections>
                             </button>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFK-O8-Gyo" userLabel="CoverView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF5-JH-5JV">
                                 <rect key="frame" x="127.5" y="315.5" width="120" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -68,8 +72,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="GF5-JH-5JV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ECV-gf-6w2"/>
-                            <constraint firstItem="GF5-JH-5JV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="FZ5-Sn-ZYg"/>
+                            <constraint firstItem="GF5-JH-5JV" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="0EF-qO-LBe"/>
+                            <constraint firstItem="CFK-O8-Gyo" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="BDH-aw-Oby"/>
+                            <constraint firstItem="GF5-JH-5JV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="DLy-Cd-8og"/>
+                            <constraint firstItem="CFK-O8-Gyo" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="FHS-Kt-f3l"/>
                             <constraint firstItem="jQ1-fr-sZ8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GFL-H7-5hk"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="bottom" secondItem="Tt2-T9-hKI" secondAttribute="bottom" id="Gd2-lB-rP4"/>
                             <constraint firstItem="GHn-9F-yYC" firstAttribute="centerX" secondItem="Tt2-T9-hKI" secondAttribute="centerX" id="Jmc-BG-cCy"/>
@@ -80,17 +86,20 @@
                             <constraint firstItem="GHn-9F-yYC" firstAttribute="centerY" secondItem="Tt2-T9-hKI" secondAttribute="top" constant="30" id="RYE-Ly-oE3"/>
                             <constraint firstItem="Tt2-T9-hKI" firstAttribute="leading" secondItem="8yl-hw-zBV" secondAttribute="trailing" constant="8" id="SRH-R6-zcT"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="SWq-qg-emY"/>
+                            <constraint firstItem="CFK-O8-Gyo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="VBw-Bk-boG"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="top" secondItem="jQ1-fr-sZ8" secondAttribute="bottom" constant="8" id="Y7V-Pu-JZ1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tt2-T9-hKI" secondAttribute="trailing" constant="30" id="dym-mQ-VlT"/>
                             <constraint firstItem="Tt2-T9-hKI" firstAttribute="width" secondItem="8yl-hw-zBV" secondAttribute="width" multiplier="0.4" id="mnY-Vb-Adc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ESr-CD-INB" secondAttribute="bottom" constant="20" id="oJM-0D-3FG"/>
                             <constraint firstItem="ESr-CD-INB" firstAttribute="top" secondItem="8yl-hw-zBV" secondAttribute="bottom" constant="8" id="wNH-Zf-uuc"/>
+                            <constraint firstItem="CFK-O8-Gyo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zpg-KV-160"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="ESr-CD-INB" secondAttribute="leading" id="zvy-dw-o3S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
+                        <outlet property="coverView" destination="CFK-O8-Gyo" id="rCm-UN-2Km"/>
                         <outlet property="palletView" destination="ESr-CD-INB" id="xUC-Y3-kfJ"/>
                         <outlet property="playAgainButton" destination="GF5-JH-5JV" id="vrg-vJ-H5n"/>
                         <outlet property="resultsButtonOffset" destination="RYE-Ly-oE3" id="4c1-LT-JMs"/>
