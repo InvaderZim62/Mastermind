@@ -20,6 +20,7 @@
 		4A1AB8A924E9DF7E00140429 /* MarbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8A824E9DF7E00140429 /* MarbleView.swift */; };
 		4A1AB8AC24EA096000140429 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8AB24EA096000140429 /* CGPointExtension.swift */; };
 		4A1AB8AF24EC50C200140429 /* PalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8AE24EC50C200140429 /* PalletView.swift */; };
+		4A1AB8B124EC9A0000140429 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB8B024EC9A0000140429 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		4A1AB8A824E9DF7E00140429 /* MarbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarbleView.swift; sourceTree = "<group>"; };
 		4A1AB8AB24EA096000140429 /* CGPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
 		4A1AB8AE24EC50C200140429 /* PalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalletView.swift; sourceTree = "<group>"; };
+		4A1AB8B024EC9A0000140429 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				4A1AB88E24E85F0200140429 /* Main.storyboard */,
-				4A1AB88C24E85F0200140429 /* MastermindViewController.swift */,
+				4A1AB8B324EC9E9D00140429 /* Controller */,
 				4A1AB8AA24EA060000140429 /* Model */,
 				4A1AB8A324E8825400140429 /* View */,
 				4A1AB8AD24EA097500140429 /* Utilities */,
@@ -118,6 +120,15 @@
 				4A1AB8AB24EA096000140429 /* CGPointExtension.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4A1AB8B324EC9E9D00140429 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4A1AB88C24E85F0200140429 /* MastermindViewController.swift */,
+				4A1AB8B024EC9A0000140429 /* SettingsViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +204,7 @@
 			files = (
 				4A1AB88D24E85F0200140429 /* MastermindViewController.swift in Sources */,
 				4A1AB89E24E862E500140429 /* BoardView.swift in Sources */,
+				4A1AB8B124EC9A0000140429 /* SettingsViewController.swift in Sources */,
 				4A1AB8AC24EA096000140429 /* CGPointExtension.swift in Sources */,
 				4A1AB8A924E9DF7E00140429 /* MarbleView.swift in Sources */,
 				4A1AB88924E85F0200140429 /* AppDelegate.swift in Sources */,

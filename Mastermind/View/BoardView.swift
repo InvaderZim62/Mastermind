@@ -10,9 +10,10 @@ import UIKit
 
 class BoardView: UIView {
     
-    var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)
-    var allGuessColors = [[UIColor]]()
-    var turnNumber = 0
+    var maxGuesses = 10
+    var numberHiddenColors = 4
+    var currentGuessColors = [UIColor]()
+    var allGuessColors = [[UIColor]]() { didSet { setNeedsDisplay() } } // increases in size as game progresses
     
     private let globalData = GlobalData.sharedInstance
     private var leftOffset: CGFloat = 0
@@ -37,13 +38,15 @@ class BoardView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        for row in 0..<Constants.maxGuesses {
-            if row < Constants.maxGuesses - 1 {
+        for row in 0..<maxGuesses {
+            if row < maxGuesses - 1 {
                 drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1))
             }
-            for col in 0..<Constants.numberHiddenColors {
+            for col in 0..<numberHiddenColors {
                 let center = getHoleCenterPointFor(row: row, col: col)
-                let color: UIColor = row < turnNumber ? allGuessColors[row][col] : row == turnNumber ? currentGuessColors[col] : Constants.boardColor
+                let color: UIColor = row < allGuessColors.count ?
+                    allGuessColors[row][col] :
+                    row == allGuessColors.count ? currentGuessColors[col] : Constants.boardColor
                 drawHole(center: center, color: color)
             }
         }

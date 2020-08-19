@@ -14,7 +14,9 @@ struct ResultsConst {
 
 class ResultsView: UIView {
     
-    var results = [[Result]]()
+    var maxGuesses = 10
+    var numberHiddenColors = 4 { didSet { setNeedsLayout() } }  // request call to layoutSubviews
+    var results = [[Result]]() { didSet { setNeedsDisplay() } }
 
     private let globalData = GlobalData.sharedInstance
 
@@ -24,19 +26,19 @@ class ResultsView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        numberPegColumns = Int(round(CGFloat(Constants.numberHiddenColors) / 2))
+        numberPegColumns = Int(round(CGFloat(numberHiddenColors) / 2))
         pegSeparation = globalData.circleSeparation / CGFloat(ResultsConst.pegRows)
         leftPegOffset = (bounds.width - CGFloat(numberPegColumns) * pegSeparation) / 2
         setNeedsDisplay()
     }
 
     override func draw(_ rect: CGRect) {
-        for row in 0..<Constants.maxGuesses {
-            if row < Constants.maxGuesses - 1 { drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1)) }
+        for row in 0..<maxGuesses {
+            if row < maxGuesses - 1 { drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1)) }
             for subRow in 0..<ResultsConst.pegRows {
                 for col in 0..<numberPegColumns {
                     let pegNumber = subRow * numberPegColumns + col
-                    if pegNumber < Constants.numberHiddenColors {
+                    if pegNumber < numberHiddenColors {
                         let center = CGPoint(x: leftPegOffset + pegSeparation * (CGFloat(col) + 0.5),
                                              y: globalData.topOffset + pegSeparation * (CGFloat(row * ResultsConst.pegRows + subRow) + 0.5))
                         let color: UIColor = row < results.count ?

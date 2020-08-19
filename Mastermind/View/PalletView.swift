@@ -10,8 +10,8 @@ import UIKit
 
 class PalletView: UIView {
     
-    var isShowing = false { didSet { setNeedsDisplay() } }
-    var hiddenColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.numberHiddenColors)
+    var isShowing = false { didSet { setNeedsDisplay() } }  // isShowing true after game over (show hidden marbles)
+    var hiddenColors = [UIColor]()
     
     private let globalData = GlobalData.sharedInstance
     
@@ -27,7 +27,7 @@ class PalletView: UIView {
 
     override func draw(_ rect: CGRect) {
         if isShowing {
-            for col in 0..<Constants.numberHiddenColors {
+            for col in 0..<hiddenColors.count {
                 let center = getHoleCenterPointFor(col: col)
                 let color: UIColor = hiddenColors[col]
                 drawHole(center: center, color: color)
