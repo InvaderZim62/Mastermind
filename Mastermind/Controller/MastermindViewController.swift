@@ -24,9 +24,6 @@
 //  Useful conversions...
 //  UIColor to value in marbleColors array     marbleView.color.value     let currentGuessValues = currentGuessColors.map { $0.value }
 //
-//  To do...
-//  - add Done button to SettingVC (needed for old iPad)
-//
 
 import UIKit
 
@@ -55,7 +52,7 @@ class MastermindViewController: UIViewController {
         didSet {
             playAgainButton.isHidden = !isGameOver
             messageLabel.isHidden = !isGameOver
-            coverView.alpha = isGameOver ? 0.3 : 0  // darken screen
+            coverView.alpha = isGameOver ? 0.4 : 0  // darken screen and prevent touches from passing through
             palletView.isShowing = isGameOver
             palletView.layer.zPosition = isGameOver ? 2 : 0
             if isGameOver {
