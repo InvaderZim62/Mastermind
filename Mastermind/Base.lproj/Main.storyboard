@@ -214,7 +214,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="wup-Mb-fIv" kind="unwind" unwindAction="returnFromSegue:" id="LC3-KS-f8O"/>
+                                    <action selector="doneSelected:" destination="HVk-Pq-N8I" eventType="touchUpInside" id="MDe-05-8xI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -233,7 +233,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sUX-J3-Qbg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="wup-Mb-fIv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="909.60000000000002" y="90.404797601199405"/>
         </scene>

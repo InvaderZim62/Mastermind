@@ -53,4 +53,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             updateSettings?()
         }
     }
+    
+    @IBAction func doneSelected(_ sender: UIButton) {
+        presentingViewController?.dismiss(animated: true)
+    }
 }
