@@ -24,12 +24,12 @@ struct Mastermind {
         return allGuessValues.count
     }
 
-    private var numberHidden = 0  // number of hidden marbles
     private var maxGuesses = 0  // max guesses allowed
+    private var numberHidden = 0  // number of hidden marbles
 
-    init(numberHidden: Int, maxGuesses: Int) {
-        self.numberHidden = numberHidden
+    init(maxGuesses: Int, numberHidden: Int) {
         self.maxGuesses = maxGuesses
+        self.numberHidden = numberHidden
         reset()
     }
     

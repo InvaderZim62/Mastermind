@@ -40,7 +40,7 @@ class MastermindViewController: UIViewController {
     
     var maxGuesses = Constants.defaultMaxGuesses
     var numberHiddenColors = Constants.defaultNumberHiddenColors
-    var mastermind = Mastermind(numberHidden: Constants.defaultNumberHiddenColors, maxGuesses: Constants.defaultMaxGuesses)
+    var mastermind = Mastermind(maxGuesses: Constants.defaultMaxGuesses, numberHidden: Constants.defaultNumberHiddenColors)
     var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.defaultNumberHiddenColors)  // the current guess, being built up
     let globalData = GlobalData.sharedInstance
     var palletMarbleViews = [MarbleView]()
@@ -150,7 +150,7 @@ class MastermindViewController: UIViewController {
     // call reset to start new game, and after return from SettingsVC (maxGuesses and/or numberHiddenColors changed)
     private func reset() {
         setGlobalData()
-        mastermind = Mastermind(numberHidden: numberHiddenColors, maxGuesses: maxGuesses)  // generates new hiddenColors
+        mastermind = Mastermind(maxGuesses: maxGuesses, numberHidden: numberHiddenColors)  // generates new hiddenColors
         currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: numberHiddenColors)
         palletView.hiddenColors = mastermind.hiddenColors  // .hiddenColors from extension, below
         boardView.maxGuesses = maxGuesses
