@@ -32,12 +32,16 @@ struct Constants {
     static let boardColor = #colorLiteral(red: 0.9607843137, green: 0.8941176471, blue: 0.8588235294, alpha: 1)
     static let marbleColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1), #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)]
     static let resultColors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), Constants.boardColor]  // same order as enum Result
+    static let defaultMaxGuesses = 10  // max guesses allowed
+    static let defaultNumberHiddenColors = 4  // number of hidden colors
 }
 
 class MastermindViewController: UIViewController {
     
-    var maxGuesses = 10  // max guesses allowed
-    var numberHiddenColors = 4  // number of hidden colors
+    var maxGuesses = Constants.defaultMaxGuesses
+    var numberHiddenColors = Constants.defaultNumberHiddenColors
+    var mastermind = Mastermind(numberHidden: Constants.defaultNumberHiddenColors, maxGuesses: Constants.defaultMaxGuesses)
+    var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.defaultNumberHiddenColors)  // the current guess, being built up
     let globalData = GlobalData.sharedInstance
     var palletMarbleViews = [MarbleView]()
     var boardMarbleViews = [Int: MarbleView]()  // [hole number: marbleView]
@@ -63,8 +67,6 @@ class MastermindViewController: UIViewController {
             updateViewFromModel()
         }
     }
-    lazy var mastermind = Mastermind(numberHidden: numberHiddenColors, maxGuesses: maxGuesses)
-    lazy var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: numberHiddenColors)  // the current guess, being built up
 
     // MARK: - Outlets
 
@@ -89,13 +91,12 @@ class MastermindViewController: UIViewController {
         playAgainButton.layer.borderColor = UIColor.white.cgColor
         showResultsButton.isHidden = true  // unhide when all four guess positions are filled
         messageLabel.isHidden = true
-        
-        palletView.hiddenColors = mastermind.hiddenColors  // .hiddenColors from extension, below
-
         // add marbles to self.view, using palletView for alignment
         for marbleColor in Constants.marbleColors {
             createPalletMarbleWith(color: marbleColor)
         }
+        getUserDefaults()
+        reset()
     }
     
     // called when orientation changes or subview added
@@ -110,6 +111,25 @@ class MastermindViewController: UIViewController {
         updateViewFromModel()
     }
     
+    func getUserDefaults() {
+        let defaults = UserDefaults.standard
+        maxGuesses = defaults.integer(forKey: "maxGuesses")
+        if maxGuesses == 0 {  // zero, if not in userDefaults
+            maxGuesses = Constants.defaultMaxGuesses
+        }
+        numberHiddenColors = defaults.integer(forKey: "numberHiddenColors")
+        if numberHiddenColors == 0 {
+            numberHiddenColors = Constants.defaultNumberHiddenColors
+        }
+        setUserDefaults()
+    }
+    
+    func setUserDefaults() {
+        let defaults = UserDefaults.standard
+        defaults.set(maxGuesses, forKey: "maxGuesses")
+        defaults.set(numberHiddenColors, forKey: "numberHiddenColors")
+    }
+
     // GlobalData has layout-dependent properties
     private func setGlobalData() {
         // center 10 x 4 grid of circles, no matter what the aspect ratio of BoardView is
@@ -327,6 +347,7 @@ class MastermindViewController: UIViewController {
                 svc.updateSettings = { [weak self] in
                     self?.maxGuesses = svc.maxGuesses
                     self?.numberHiddenColors = svc.numberHiddenColors
+                    self?.setUserDefaults()
                     self?.reset()
                 }
             }
