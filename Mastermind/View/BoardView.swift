@@ -40,7 +40,7 @@ class BoardView: UIView {
     override func draw(_ rect: CGRect) {
         for row in 0..<maxGuesses {
             if row < maxGuesses - 1 {
-                drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1))
+                drawLine(yPos: globalData.topOffset +  globalData.circleSeparation * CGFloat(row + 1))  // draw line below current row (except for last)
             }
             for col in 0..<numberHiddenColors {
                 let center = getHoleCenterPointFor(row: row, col: col)

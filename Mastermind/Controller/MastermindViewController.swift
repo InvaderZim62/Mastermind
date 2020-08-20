@@ -137,6 +137,8 @@ class MastermindViewController: UIViewController {
         boardView.numberHiddenColors = numberHiddenColors
         resultsView.maxGuesses = maxGuesses
         resultsView.numberHiddenColors = numberHiddenColors
+        boardMarbleViews.values.forEach { $0.removeFromSuperview() }
+        boardMarbleViews.removeAll()
         setResultsButtonOffset()
         isGameOver = false
     }
