@@ -333,6 +333,17 @@ class MastermindViewController: UIViewController {
             }
         }
     }
+    
+    // In SettingsVC (storyboard), I control-dragged the Done button to the red exit icon on top of
+    // the controller and selected returnFromSegue: from the list (after entering this code, here).
+    @IBAction func returnFrom(segue: UIStoryboardSegue) {
+//        if let _ = segue.source as? SettingsViewController {
+            // Don't need to do anything here, since prepare(for segue:) passes a callback to SettingVC that
+            // gets called when any settings change.  This is just needed to unwind from a full-screen modal
+            // segue (needed for iPad running iOS 12) that's not embedded in a navigation controller.
+            // Note: return from Full Screen Modal segue also calls viewDidAppear, Will, and Did again
+//        }
+    }
 }
 
 // MARK: - Extensions
