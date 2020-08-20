@@ -183,9 +183,9 @@ class MastermindViewController: UIViewController {
             pan.setTranslation(CGPoint.zero, in: view)
             
             if pan.state == .ended {
+                marbleView.layer.zPosition = 1
                 if let holeIndex = nearbyHole(marbleView) {
                     // panned marble near hole - replace with board marble and update guess colors
-                    marbleView.layer.zPosition = 1
                     currentGuessColors[holeIndex] = marbleView.color
                     updateViewFromModel()
                     // return marble to startPanPoint instantly, to allow re-use (isInHole stores the guess)  pws: move storing of guess here?
@@ -246,8 +246,8 @@ class MastermindViewController: UIViewController {
             pan.setTranslation(CGPoint.zero, in: view)
             
             if pan.state == .ended {
+                marbleView.layer.zPosition = 1
                 if let holeIndex = nearbyHole(marbleView) {
-                    marbleView.layer.zPosition = 1
                     // center marbleView at holeIndex
                     let holePoint = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
                     marbleView.center = boardView.convert(holePoint, to: view)  // convert from boardView to view coords
@@ -281,7 +281,7 @@ class MastermindViewController: UIViewController {
         for holeIndex in 0..<numberHiddenColors {
             let holeCenter = boardView.getHoleCenterPointFor(row: mastermind.guessNumber, col: holeIndex)
             let marblePoint = view.convert(marbleView.center, to: boardView)  // convert from view to boardView coords
-            if marblePoint.distance(from: holeCenter) < 15 {
+            if marblePoint.distance(from: holeCenter) < 20 {
                 return holeIndex
             }
         }
