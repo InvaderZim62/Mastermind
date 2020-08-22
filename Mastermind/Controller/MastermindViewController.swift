@@ -76,7 +76,7 @@ class MastermindViewController: UIViewController {
     @IBOutlet weak var palletView: PalletView!
     @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var showResultsButton: UIButton!
-    @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!
+    @IBOutlet weak var resultsButtonOffset: NSLayoutConstraint!  // distance from top of resultsView to top of "Show Results" button
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     
@@ -113,12 +113,11 @@ class MastermindViewController: UIViewController {
     
     func getUserDefaults() {
         let defaults = UserDefaults.standard
-        maxGuesses = defaults.integer(forKey: "maxGuesses")
-        if maxGuesses == 0 {  // zero, if not in userDefaults
+        if defaults.object(forKey: "maxGuesses") != nil {
+            maxGuesses = defaults.integer(forKey: "maxGuesses")
+            numberHiddenColors = defaults.integer(forKey: "numberHiddenColors")
+        } else {
             maxGuesses = Constants.defaultMaxGuesses
-        }
-        numberHiddenColors = defaults.integer(forKey: "numberHiddenColors")
-        if numberHiddenColors == 0 {
             numberHiddenColors = Constants.defaultNumberHiddenColors
         }
         setUserDefaults()
