@@ -11,18 +11,13 @@
 //  currentGuessColors.  When all four (numberHiddenColors) holes are filled, the showResults button is shown.  When the
 //  showResults button is pressed, currentGuessColors is set back to Constants.background color.
 //
-//  mastermind.allGuessValues is a 2D array (row x col) of Int.  It contains the color values (indices into the
-//  Constants.marbleColors array) of all past guesses.  It is past to boardView for drawing.  It starts out empty and grows
-//  one row at a time.  allGuessValues is converted to a 2D array of UIColor called allGuessColors, using the computed property
-//  in an extention to Mastermind at the bottom of this file.
+//  mastermind.allGuessColors is a 2D array (row x col) of UIColor.  It contains the colors of all past guesses.  It is past
+//  to boardView for drawing.  It starts out empty and grows one row at a time.
 //
 //  PalletView is used to show the hidden marble colors when the game is over.  It is also used to align the marbleViews for
 //  use in the game, even though the marbleViews are subviews of the main view.  During the game, the palletView zPosition is
 //  set to 0, so the hidden marbles drawn on it cannot be seen.  When the game is over, the zPosition is set to two, so it
 //  covers the marbleViews.
-//
-//  Useful conversions...
-//  UIColor to value in marbleColors array     marbleView.color.value     let currentGuessValues = currentGuessColors.map { $0.value }
 //
 
 import UIKit
@@ -40,7 +35,9 @@ class MastermindViewController: UIViewController {
     
     var maxGuesses = Constants.defaultMaxGuesses
     var numberHiddenColors = Constants.defaultNumberHiddenColors
-    var mastermind = Mastermind(maxGuesses: Constants.defaultMaxGuesses, numberHidden: Constants.defaultNumberHiddenColors)
+    var mastermind = Mastermind<UIColor>(colorChoices: Constants.marbleColors,
+                                         maxGuesses: Constants.defaultMaxGuesses,
+                                         numberHidden: Constants.defaultNumberHiddenColors)
     var currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: Constants.defaultNumberHiddenColors)  // the current guess, being built up
     let globalData = GlobalData.sharedInstance
     var palletMarbleViews = [MarbleView]()
@@ -142,16 +139,16 @@ class MastermindViewController: UIViewController {
     
     private func updateViewFromModel() {
         boardView.currentGuessColors = currentGuessColors
-        boardView.allGuessColors = mastermind.allGuessColors  // .allGuessColors from extension, below
+        boardView.allGuessColors = mastermind.allGuessColors
         resultsView.results = mastermind.results
     }
 
     // call reset to start new game, and after return from SettingsVC (maxGuesses and/or numberHiddenColors changed)
     private func reset() {
         setGlobalData()
-        mastermind = Mastermind(maxGuesses: maxGuesses, numberHidden: numberHiddenColors)  // generates new hiddenColors
+        mastermind = Mastermind(colorChoices: Constants.marbleColors, maxGuesses: maxGuesses, numberHidden: numberHiddenColors)  // generates new hiddenColors
         currentGuessColors = [UIColor](repeating: Constants.backgroundColor, count: numberHiddenColors)
-        palletView.hiddenColors = mastermind.hiddenColors  // .hiddenColors from extension, below
+        palletView.hiddenColors = mastermind.hiddenColors
         boardView.maxGuesses = maxGuesses
         boardView.numberHiddenColors = numberHiddenColors
         resultsView.maxGuesses = maxGuesses
@@ -160,6 +157,9 @@ class MastermindViewController: UIViewController {
         boardMarbleViews.removeAll()
         setResultsButtonOffset()
         isGameOver = false
+        
+        let hiddenColorNames = mastermind.hiddenColors.map { $0.name }
+        print("hidden colors: \(hiddenColorNames)")
     }
     
     // MARK: - Pallet Marbles
@@ -321,8 +321,7 @@ class MastermindViewController: UIViewController {
     }
     
     private func getResults() {
-        let currentGuessValues = currentGuessColors.map { $0.value }  // .value from extension, below
-        let result = mastermind.getResultFor(guess: currentGuessValues)
+        let result = mastermind.getResultFor(guess: currentGuessColors)
         let rightMarbles = result.filter { $0 == .rightColorRightPosition }
         if rightMarbles.count == numberHiddenColors {
             isSuccess = true
@@ -331,7 +330,7 @@ class MastermindViewController: UIViewController {
             isSuccess = false
             isGameOver = true
         } else {
-            isGameOver = false  // triggers updateViewFromModel (needed since mastermind.allGuessValues changed)
+            isGameOver = false  // triggers updateViewFromModel (needed since mastermind.allGuessColors changed)
         }
     }
     
@@ -354,22 +353,9 @@ class MastermindViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
-
 extension UIColor {
-    // index of UIColor in Constants.marbleColors array
-    var value: Int {
-        return Constants.marbleColors.firstIndex(of: self)!
-    }
-}
-
-extension Mastermind {
-    // 2D array of UIColors corresponding to allGuessValues
-    var allGuessColors: [[UIColor]] {
-        return allGuessValues.map { $0.map { Constants.marbleColors[$0] } }
-    }
-    // array of UIColor corresponding to hiddenValues
-    var hiddenColors: [UIColor] {
-        return hiddenValues.map { Constants.marbleColors[$0] }
+    static let names = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1): "black", #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1): "white", #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1): "red", #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1): "yellow", #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1): "green", #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1): "blue"]
+    var name: String {
+        UIColor.names[self] ?? "unk."
     }
 }

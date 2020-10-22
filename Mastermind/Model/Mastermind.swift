@@ -5,53 +5,57 @@
 //  Created by Phil Stern on 8/15/20.
 //  Copyright © 2020 Phil Stern. All rights reserved.
 //
+//  Mastermind is generic for Color, so that it doesn't need to import UIKit.
+//  Color is set to UIColor when declared in MastermindViewController.
+//
 
 import Foundation
 
-enum Result: Int, CaseIterable {  // CaseIterable allows Ressult.allCases
+enum Result: Int, CaseIterable {  // CaseIterable allows Result.allCases
     case rightColorRightPosition
     case rightColorWrongPosition
     case wrongColor
 }
 
-struct Mastermind {
+struct Mastermind<Color> where Color: Equatable {
 
     // read-only properties
-    private(set) var hiddenValues = [Int]()  // these are the color values you're trying to guess
-    private(set) var allGuessValues = [[Int]]()
-    private(set) var results = [[Result]]()  // results[row][position]
+    private(set) var hiddenColors = [Color]()  // these are the colors you're trying to guess
+    private(set) var allGuessColors = [[Color]]()  // these are the past guesses, allGuessColors[row][position]
+    private(set) var results = [[Result]]()  // these are the past results of each guess, results[row][position]
     var guessNumber: Int {
-        return allGuessValues.count
+        return allGuessColors.count
     }
 
+    private var colorChoices = [Color]()  // all available game colors
     private var maxGuesses = 0  // max guesses allowed
     private var numberHidden = 0  // number of hidden marbles
 
-    init(maxGuesses: Int, numberHidden: Int) {
+    init(colorChoices: [Color], maxGuesses: Int, numberHidden: Int) {
+        self.colorChoices = colorChoices
         self.maxGuesses = maxGuesses
         self.numberHidden = numberHidden
         reset()
     }
     
-    mutating func selectHiddenValues() {
+    mutating func selectHiddenColors() {
         for _ in 0..<numberHidden {
-            hiddenValues.append(Int.random(in: 0..<Constants.marbleColors.count))
+            hiddenColors.append(colorChoices.randomElement()!)
         }
     }
     
     mutating func reset() {
-        allGuessValues.removeAll()
+        hiddenColors.removeAll()
+        allGuessColors.removeAll()
         results.removeAll()
-        hiddenValues.removeAll()
-        selectHiddenValues()
-        print("hidden values: \(hiddenValues)")
+        selectHiddenColors()
     }
     
-    mutating func getResultFor(guess: [Int]) -> [Result] {
-        precondition(guess.count == hiddenValues.count, "Number of values in guess must match number of hidden values")
-        allGuessValues.append(guess)
+    mutating func getResultFor(guess: [Color]) -> [Result] {
+        precondition(guess.count == hiddenColors.count, "Number of colors in guess must match number of hidden colors")
+        allGuessColors.append(guess)
         var result = [Result]()
-        var tempHidden = hiddenValues
+        var tempHidden = hiddenColors
         var tempGuess = guess
         for (index, aGuess) in tempGuess.enumerated().reversed() {
             if aGuess == tempHidden[index] {
