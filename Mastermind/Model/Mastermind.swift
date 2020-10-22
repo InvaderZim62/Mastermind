@@ -11,12 +11,6 @@
 
 import Foundation
 
-enum Result: Int, CaseIterable {  // CaseIterable allows Result.allCases
-    case rightColorRightPosition
-    case rightColorWrongPosition
-    case wrongColor
-}
-
 struct Mastermind<Color> where Color: Equatable {
 
     // read-only properties

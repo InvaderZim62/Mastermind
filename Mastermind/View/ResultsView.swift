@@ -42,7 +42,7 @@ class ResultsView: UIView {
                         let center = CGPoint(x: leftPegOffset + pegSeparation * (CGFloat(col) + 0.5),
                                              y: globalData.topOffset + pegSeparation * (CGFloat(row * ResultsConst.pegRows + subRow) + 0.5))
                         let color: UIColor = row < results.count ?
-                            Constants.resultColors[results[row][subRow * numberPegColumns + col].rawValue] : Constants.boardColor
+                            results[row][subRow * numberPegColumns + col].rawValue : Constants.boardColor
                         drawHole(center: center, color: color)
                     }
                 }
