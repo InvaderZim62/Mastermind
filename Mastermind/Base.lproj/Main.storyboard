@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,7 +38,7 @@
                                 <rect key="frame" x="258.5" y="78" width="86.5" height="472"/>
                                 <color key="backgroundColor" red="0.96096640825271606" green="0.89361369609832764" blue="0.85770004987716675" alpha="0.99972534179999994" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GHn-9F-yYC">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GHn-9F-yYC">
                                 <rect key="frame" x="247.5" y="95" width="108" height="26"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
@@ -79,8 +80,8 @@
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF5-JH-5JV">
-                                <rect key="frame" x="127.5" y="315.5" width="120" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF5-JH-5JV">
+                                <rect key="frame" x="128" y="315.5" width="119" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>
@@ -100,6 +101,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="GF5-JH-5JV" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="0EF-qO-LBe"/>
@@ -129,7 +131,6 @@
                             <constraint firstItem="CFK-O8-Gyo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zpg-KV-160"/>
                             <constraint firstItem="8yl-hw-zBV" firstAttribute="leading" secondItem="ESr-CD-INB" secondAttribute="leading" id="zvy-dw-o3S"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="boardView" destination="8yl-hw-zBV" id="RTx-ab-oTT"/>
@@ -156,13 +157,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Ri8-7a-bRf">
-                                <rect key="frame" x="93.5" y="230" width="188" height="187"/>
+                                <rect key="frame" x="84" y="230" width="207.5" height="187"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="WE0-vX-BUQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="188" height="90"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="207.5" height="90"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hidden Colors:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hy1-Em-GaC">
-                                                <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="119.5" height="90"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -171,19 +172,19 @@
                                                 </variation>
                                             </label>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCb-bk-swF">
-                                                <rect key="frame" x="148" y="0.0" width="40" height="90"/>
+                                                <rect key="frame" x="147.5" y="0.0" width="60" height="90"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="40" id="hMf-z5-xUp"/>
+                                                    <constraint firstAttribute="width" constant="60" id="hMf-z5-xUp"/>
                                                     <constraint firstAttribute="height" constant="90" id="igq-Xh-Y3B"/>
                                                 </constraints>
                                             </pickerView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="daX-oU-OMc">
-                                        <rect key="frame" x="0.0" y="97" width="188" height="90"/>
+                                        <rect key="frame" x="0.0" y="97" width="207.5" height="90"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guesses:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rkH-is-eDf">
-                                                <rect key="frame" x="0.0" y="0.0" width="120" height="90"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="119.5" height="90"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -192,10 +193,10 @@
                                                 </variation>
                                             </label>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kiy-Tw-y10">
-                                                <rect key="frame" x="148" y="0.0" width="40" height="90"/>
+                                                <rect key="frame" x="147.5" y="0.0" width="60" height="90"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="90" id="QCs-Pp-7xE"/>
-                                                    <constraint firstAttribute="width" constant="40" id="swc-B5-UuY"/>
+                                                    <constraint firstAttribute="width" constant="60" id="swc-B5-UuY"/>
                                                 </constraints>
                                             </pickerView>
                                         </subviews>
@@ -206,7 +207,7 @@
                                     <constraint firstAttribute="trailing" secondItem="daX-oU-OMc" secondAttribute="trailing" id="yaf-dw-BoS"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAr-ZW-xta">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAr-ZW-xta">
                                 <rect key="frame" x="166" y="593" width="43" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Done"/>
@@ -218,14 +219,14 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="0gC-Jj-dTv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="0gC-Jj-dTv" firstAttribute="bottom" secondItem="VAr-ZW-xta" secondAttribute="bottom" constant="20" id="abZ-ww-X2m"/>
                             <constraint firstItem="Ri8-7a-bRf" firstAttribute="centerY" secondItem="eot-0E-Rvl" secondAttribute="centerY" id="ph6-uI-JfO"/>
                             <constraint firstItem="Ri8-7a-bRf" firstAttribute="centerX" secondItem="eot-0E-Rvl" secondAttribute="centerX" id="qd0-ln-iCX"/>
                             <constraint firstItem="VAr-ZW-xta" firstAttribute="centerX" secondItem="eot-0E-Rvl" secondAttribute="centerX" id="zcm-Hb-T5G"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="0gC-Jj-dTv"/>
                     </view>
                     <connections>
                         <outlet property="maxGuessesPicker" destination="kiy-Tw-y10" id="d4I-Vi-ROt"/>
@@ -239,5 +240,8 @@
     </scenes>
     <resources>
         <image name="cog" width="30" height="30"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
