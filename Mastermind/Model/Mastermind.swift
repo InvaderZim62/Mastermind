@@ -6,7 +6,8 @@
 //  Copyright © 2020 Phil Stern. All rights reserved.
 //
 //  Mastermind is generic for Color, so that it doesn't need to import UIKit.
-//  Color is set to UIColor when declared in MastermindViewController.
+//  Color must conform to Equatable, since Colors are compared using == in the code, below.
+//  Color is set to UIColor (which is equatable) when declared in MastermindViewController.
 //
 
 import Foundation
