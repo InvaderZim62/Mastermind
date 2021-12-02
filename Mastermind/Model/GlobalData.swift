@@ -8,7 +8,7 @@
 //  This class contains the properties that change with screen orientation.  They are computed based on
 //  the layout of BoardView.  Since the order that iOS calls layoutSubviews for each view (BoardView,
 //  ResultsView, pallet UIView,...) is arbitrary, the properties are updated in
-//  MastermindViewController.viewDidLayoutSubviews, which is called after the views are layed out, but
+//  MastermindViewController.viewDidLayoutSubviews, which is called after the views are laid out, but
 //  before the layoutSubviews functions are called.
 //
 
