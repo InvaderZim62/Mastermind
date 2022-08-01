@@ -5,6 +5,8 @@
 //  Created by Phil Stern on 8/18/20.
 //  Copyright © 2020 Phil Stern. All rights reserved.
 //
+//  Note: Set the button type to Custom in InterfaceBuilder, or the cog image will be solid blue.
+//
 
 import UIKit
 
