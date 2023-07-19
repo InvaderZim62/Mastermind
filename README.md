@@ -11,3 +11,4 @@ A settings screen allows you to change the number of hidden colors and guesses.
 
 ![Mastermind](https://github.com/InvaderZim62/Mastermind/assets/34785252/d0dea0f8-227c-4c41-8fc1-0c48a5fe1e4e) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img width="250" alt="Mastermind settings" src="https://github.com/InvaderZim62/Mastermind/assets/34785252/103b4ec2-1e11-486a-b57a-f3042848ad3a">
+<img width="100" alt="Mastermind video resized" src="https://github.com/InvaderZim62/Mastermind/assets/34785252/d0dea0f8-227c-4c41-8fc1-0c48a5fe1e4e">
