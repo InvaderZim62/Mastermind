@@ -7,4 +7,7 @@ than once.  After each guess, the results are shown with the little circles on t
 circles indicate the number of correct colors in the wrong positions.  Black circles indicate the
 number of correct colors in the correct positions.  Use past results to narrow in on the answer.
 
+A settings screen allow you to change the hidden colors and guesses.
+
 ![Mastermind](https://github.com/InvaderZim62/Mastermind/assets/34785252/d0dea0f8-227c-4c41-8fc1-0c48a5fe1e4e)
+<img width="125" alt="Mastermind settings" src="https://github.com/InvaderZim62/Mastermind/assets/34785252/103b4ec2-1e11-486a-b57a-f3042848ad3a">
