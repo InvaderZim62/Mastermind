@@ -1,7 +1,10 @@
 # Mastermind
 
-Try to guess the colors.  After each guess, the results are shown with the little circles on the right.
-White circles indicate correct colors in the wrong positions.  Black circles indicate correct colors in
-the correct position.
+Mastermind is a 1970s board game manufactured by Pressman Toys.
+
+Try to guess the hidden colors using the marbles along the bottom.  The same color may be used more
+than once.  After each guess, the results are shown with the little circles on the right.  White
+circles indicate the number of correct colors in the wrong positions.  Black circles indicate the
+number of correct colors in the correct positions.  Use past results to narrow in on the answer.
 
 ![Mastermind](https://github.com/InvaderZim62/Mastermind/assets/34785252/d0dea0f8-227c-4c41-8fc1-0c48a5fe1e4e)
