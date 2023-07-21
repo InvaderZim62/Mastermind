@@ -10,4 +10,5 @@ number of correct colors in the correct positions.  Use past results to narrow i
 A settings screen allows you to change the number of hidden colors and guesses.
 
 ![Mastermind](https://github.com/InvaderZim62/Mastermind/assets/34785252/663d1793-7d50-4a6e-9d5a-c3480aa62622)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img width="250" alt="Mastermind settings" src="https://github.com/InvaderZim62/Mastermind/assets/34785252/2b9c1b96-2353-402c-a190-7760b6eb5fbe">
